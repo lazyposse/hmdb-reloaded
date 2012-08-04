@@ -1,7 +1,8 @@
 (defproject test-lily/test-lily "0.1.0-SNAPSHOT"
   :license {:name "Eclipse Public License",
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.4.0"]]
+  :dependencies [[org.clojure/clojure "1.4.0"]
+                 [org.lilyproject.lily-client "1.2.1"]]
   :profiles {:dev
              {:dependencies
               [[com.intelie/lazytest
