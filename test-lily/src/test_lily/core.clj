@@ -12,5 +12,5 @@
 (comment (def repository (.. lily-client getRepository))
          (def type-manager (.. lily-client getTypeManager)))
 
+;; This is not yet working.
 
-(fact (+ 1 1) => 2)
