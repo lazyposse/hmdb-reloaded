@@ -1,8 +1,8 @@
 (ns test-lily.core
   (:use [midje.sweet])
-  (:import org.lilyproject.client.LilyClient)
-  (:import org.lilyproject.repository.api.Scope)
-  (:import org.lilyproject.repository.api.QName))
+  (:import [org.lilyproject.client         LilyClient]
+           [org.lilyproject.repository.api Scope QName]
+           [org.lilyproject.util.repo      PrintUtil]))
 
 ;; In the vm
 ;; start the lily server
