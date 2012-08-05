@@ -46,18 +46,18 @@
 ;; no persistence, just a bean
 (def record-type-book (.. type-manager (newRecordType qname-book )))
 
-;; Add the field type we previously created
-;; beurk, ugly mutating code
-(.. record-type-book (addFieldTypeEntry (. title getId) true))
+;; Add the field type we previously created (the true parameter stands for 'mandatory?')
+(.. record-type-book (addFieldTypeEntry (. title getId) true)) ;; (beurk, ugly mutating code)
 
 ;; Now we will persist the record type book
 (def book (.. type-manager (createRecordType record-type-book)))
 
 ;; Some pretty print utility
-
 (PrintUtil/print book repository)
 
 ;; ############### Now Create records
+
+
 
 ;; ############### Read records
 
