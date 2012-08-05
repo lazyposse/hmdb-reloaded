@@ -8,10 +8,14 @@
 ;; start the lily server
 ;; ~/start-lily.sh
 
+;; ############### Setup
+
 ;; Init the connection to the lily server
 (def lily-client (LilyClient. "localhost:2181" 20000))
 (def repository (.. lily-client getRepository))
 (def type-manager (.. repository getTypeManager))
+
+;; ############### Create some field types
 
 ;; we will work in the namespace 'namespace-test'
 
@@ -34,7 +38,15 @@
 ;; so i update it but this time i kept the reference!
 ( def title (.. type-manager (createOrUpdateFieldType field-type-title)))
 
+;; ############### Now create some record types
+
+;; ############### Now Create records
+
+;; ############### Read records
+
+;; ############### Update records
+
+;; ############### Delete records
 
 
-;; This is not yet working.
 
