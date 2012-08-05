@@ -8,9 +8,8 @@
 
 ;; Init the connection to the lily server
 (def lily-client (LilyClient. "localhost:2181" 20000))
-
-(comment (def repository (.. lily-client getRepository))
-         (def type-manager (.. lily-client getTypeManager)))
+(def repository (.. lily-client getRepository))
+(def type-manager (.. repository getTypeManager))
 
 ;; This is not yet working.
 
