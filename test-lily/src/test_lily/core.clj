@@ -55,9 +55,23 @@
 ;; Some pretty print utility
 (PrintUtil/print book repository)
 
+;; add a new field type
+
+;; We now add the field type authors
+(def qname-authors (QName. "namespace-test" "authors"))
+(.. type-manager (createFieldType "LIST<STRING>" qname-authors Scope/VERSIONED))
+
+;; oops again - forgot to keep the reference
+(def authors-ft (.. type-manager (getFieldTypeByName qname-authors)))
+
+(def book-retrieved (.. type-manager (getRecordTypeByName qname-book nil)))
+;; here, book retrieve and book are the same
+
+(. book-retrieved (addFieldTypeEntry (. authors-ft getId) false));; warning again, mutating code here
+
+(def book-retrieved (.. type-manager (updateRecordType book-retrieved)))
+
 ;; ############### Now Create records
-
-
 
 ;; ############### Read records
 
