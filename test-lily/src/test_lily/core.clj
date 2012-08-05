@@ -40,6 +40,23 @@
 
 ;; ############### Now create some record types
 
+;; create some name for the record type
+(def qname-book (QName. "namespace-test" "book"))
+
+;; no persistence, just a bean
+(def record-type-book (.. type-manager (newRecordType qname-book )))
+
+;; Add the field type we previously created
+;; beurk, ugly mutating code
+(.. record-type-book (addFieldTypeEntry (. title getId) true))
+
+;; Now we will persist the record type book
+(def book (.. type-manager (createRecordType record-type-book)))
+
+;; Some pretty print utility
+
+(PrintUtil/print book repository)
+
 ;; ############### Now Create records
 
 ;; ############### Read records
