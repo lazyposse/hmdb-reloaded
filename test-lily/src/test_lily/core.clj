@@ -23,6 +23,18 @@
 ;; create the field type bean (no persisting yet)
 (def field-type-title (.. type-manager (newFieldType string-value-type qname-title Scope/VERSIONED)))
 
+;; persist the bean field-type-title
+(.. type-manager (createFieldType field-type-title) )
+
+;; list the field types persisted
+(.. type-manager getFieldTypes)
+
+;; oops
+;; i forgot to keep the reference the first time
+;; so i update it but this time i kept the reference!
+( def title (.. type-manager (createOrUpdateFieldType field-type-title)))
+
+
 
 ;; This is not yet working.
 
