@@ -8,7 +8,6 @@ Vagrant::Config.run do |config|
   # config.vm.boot_mode = :gui
 
   # the lily port to access lily
-  config.vm.forward_port 12060, 12060
   config.vm.forward_port 2181, 2181
   config.vm.forward_port 2888, 2888
   config.vm.forward_port 3888, 3888
