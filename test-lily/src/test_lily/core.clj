@@ -97,7 +97,12 @@
 ;; some tool to pretty print
 (PrintUtil/print persisted-fr repository)
 
-;; ############### Update records
+;; ############### Update record
+
+(doto persisted-fr
+  (.setField qname-title "Clojure, the first language that gets it right!!!"))
+
+(def persisted-fr2 (.. repository (update persisted-fr)))
 
 ;; ############### Read records
 
