@@ -100,7 +100,8 @@
 ;; ############### Update record
 
 (doto persisted-fr
-  (.setField qname-title "Clojure, the first language that gets it right!!!"))
+  (.setField qname-title "Clojure, the first language that gets it right!!!")
+  (.delete qname-authors true ))
 
 (def persisted-fr2 (.. repository (update persisted-fr)))
 
