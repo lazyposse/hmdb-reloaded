@@ -107,7 +107,8 @@
 
 ;; ############### Read records
 
-(.. repository (read persisted-fr-id))
+;;(.. repository (read persisted-fr-id))
+
 
 ;; ############### Delete records
 
