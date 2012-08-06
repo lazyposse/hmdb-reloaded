@@ -4,6 +4,11 @@
            [org.lilyproject.repository.api Scope QName]
            [org.lilyproject.util.repo      PrintUtil]))
 
+;; ############### Static setup
+
+(def conn {:local "localhost:2181"
+           :vm    "192.168.33.10:2181"})
+
 ;; In the vm
 ;; start the lily server
 ;; ~/start-lily.sh
@@ -11,7 +16,7 @@
 ;; ############### Setup
 
 ;; Init the connection to the lily server
-(def lily-client (LilyClient. "localhost:2181" 20000))
+(def lily-client (LilyClient. (:local conn) 20000))
 (def repository (.. lily-client getRepository))
 (def type-manager (.. repository getTypeManager))
 
