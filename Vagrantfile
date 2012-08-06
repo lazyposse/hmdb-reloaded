@@ -35,4 +35,6 @@ Vagrant::Config.run do |config|
   config.vm.forward_port 60010, 60010
   config.vm.forward_port 60020, 60020
   config.vm.forward_port 60030, 60030
+  # config.vm.network :bridged
+  # config.vm.network :hostonly, "192.168.33.10"
 end
