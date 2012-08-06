@@ -78,6 +78,21 @@
 
 ;; ############### Now Create records
 
+;; first create some bean
+(def first-record (.. repository newRecord))
+
+;; now set the record type (beware, mutation here)
+(.. first-record (setRecordType qname-book))
+
+;; now set the title (which is a string)
+(.. first-record (setField qname-title "Clojure, the first language which gets it right!"))
+
+;; set the field authors (which is a list of strings)
+(.. first-record (setField qname-authors (java.util.ArrayList. ["Denis Labaye" "Antoine R. Dumont"])))
+
+;; now persist the record into the storage
+(def persisted-fr (.. repository (create first-record)))
+
 ;; ############### Read records
 
 ;; ############### Update records
