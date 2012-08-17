@@ -18,7 +18,7 @@ sample/Main.class: sample/Main.java sample/a/A.class sample/b/B.class
 run: sample/Main.class
 	java sample.Main
 
-snijure-agent.jar: SnijureAspect.java
+snijure-agent.jar: SnijureAspect.java Callback.java CallbackImpl.java
 	$(AJC) -cp $(AJC_RT) SnijureAspect.java Callback.java CallbackImpl.java -outxml -outjar snijure-agent.jar
 
 run-load-time-weaving: sample/Main.class snijure-agent.jar
