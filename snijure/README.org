@@ -1,8 +1,11 @@
 
-* TODO stuff to do [0%]
+* IN-PROGRESS stuff to do [0%]
 
-** TODO agent code [33%]
-*** TODO interface of the callback [60%]
+** IN-PROGRESS agent code [0%]
+*** IN-PROGRESS interface of the callback [66%]
+**** IN-PROGRESS put java classes in a proper package
+**** TODO add the id of the current thread to all the methods
+
 **** DONE before [100%]
 CLOSED: [2012-08-14 Tue 18:01]
 ***** DONE method (fully qualified name) [%]
@@ -16,11 +19,8 @@ CLOSED: [2012-08-14 Tue 18:08]
 **** DONE afterThrow [%]
 CLOSED: [2012-08-14 Tue 18:33]
 
-
 **** DONE rename AopContext => AspectjConfig
 CLOSED: [2012-08-17 Fri 13:43]
-
-**** TODO add the id of the current thread to all the methods
 
 
 *** TODO add the start of swank in a different thread when the agent is "activated"
