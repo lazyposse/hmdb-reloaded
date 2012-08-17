@@ -2,9 +2,8 @@ import java.util.Arrays;
 
 aspect SnijureAspect {
 
-  pointcut methodsOfInterest(): execution(* *(..))        &&
-                              !within(SnijureAspect) &&
-                              !within(CallbackImpl);;
+  pointcut methodsOfInterest(): execution(* *(..)) &&
+                                within(sample.a..*);;
 
   private int nesting = 0;
 
