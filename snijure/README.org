@@ -1,7 +1,7 @@
 
 * TODO stuff to do [0%]
 
-** TODO agent code [0%]
+** TODO agent code [33%]
 *** TODO interface of the callback [60%]
 **** DONE before [100%]
 CLOSED: [2012-08-14 Tue 18:01]
@@ -16,11 +16,15 @@ CLOSED: [2012-08-14 Tue 18:08]
 **** DONE afterThrow [%]
 CLOSED: [2012-08-14 Tue 18:33]
 
+
+**** DONE rename AopContext => AspectjConfig
+CLOSED: [2012-08-17 Fri 13:43]
+
 **** TODO add the id of the current thread to all the methods
 
 
-
 *** TODO add the start of swank in a different thread when the agent is "activated"
+
 
 ** TODO add a way to inject the callback to the agent
 ** TODO solve the "aop will intercept anything" problem [%]
