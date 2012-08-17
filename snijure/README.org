@@ -33,7 +33,7 @@ CLOSED: [2012-08-14 Tue 18:33]
 **** DONE rename AopContext => AspectjConfig
 CLOSED: [2012-08-17 Fri 13:43]
 
-*** TODO let the user specify explicitly what packages should be weaved [75%]
+*** TODO let the user specify explicitly what packages should be weaved [80%]
 **** DONE get a sys prop in the agent to get ONE package
 CLOSED: [2012-08-17 Fri 14:59]
 
@@ -42,6 +42,9 @@ CLOSED: [2012-08-17 Fri 15:13]
 
 **** DONE move the target classes in packages, as it's the way we will select the woven classes
 CLOSED: [2012-08-17 Fri 15:56]
+
+**** DONE create a new class in a different package to test the selectiveness of the aspects
+CLOSED: [2012-08-17 Fri 16:11]
 **** TODO code the agent so that we weave only the given package(s)
 
 *** TODO add the start of swank in a different thread when the agent is "activated"

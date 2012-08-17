@@ -30,4 +30,8 @@ public class A {
       try {Thread.sleep(delay);} catch (Exception e) {}
     }
   }
+
+    public static void a() {
+        System.out.println("        This is A!");
+    }
 }
