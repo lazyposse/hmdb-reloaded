@@ -22,5 +22,6 @@ timing.jar: WhereDoesTheTimeGo.java
 	$(AJC) -cp $(AJC_RT) WhereDoesTheTimeGo.java Callback.java CallbackImpl.java -outxml -outjar timing.jar
 
 run-load-time-weaving: Simple-normal.class timing.jar
-	java -javaagent":$(AJC_WE)" \
+	java -Dsnijure.pkg=stuff    \
+             -javaagent":$(AJC_WE)" \
              -classpath ".:timing.jar:$(AJC_RT)" Simple

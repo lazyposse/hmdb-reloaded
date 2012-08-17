@@ -8,9 +8,13 @@ aspect WhereDoesTheTimeGo {
 
   private static Callback cb = new CallbackImpl();
 
+  private static String pkg = System.getProperty("snijure.pkg");
+
   private Callback callback = cb;
 
   Object around(): methodsOfInterest()  {
+      System.out.println("-----> " + pkg);
+
       Object sig = thisJoinPoint.getSignature();
       callback.before(sig, thisJoinPoint.getArgs());
       nesting++;

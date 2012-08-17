@@ -33,6 +33,14 @@ CLOSED: [2012-08-14 Tue 18:33]
 **** DONE rename AopContext => AspectjConfig
 CLOSED: [2012-08-17 Fri 13:43]
 
+*** IN-PROGRESS let the user specify explicitly what packages should be weaved [33%]
+
+**** DONE get a sys prop in the agent to get ONE package
+CLOSED: [2012-08-17 Fri 14:59]
+
+**** TODO get as sys prop in the agent to get MULTIPLE package
+
+**** TODO code the agent so that we weave only the given package(s)
 
 *** TODO add the start of swank in a different thread when the agent is "activated"
 
