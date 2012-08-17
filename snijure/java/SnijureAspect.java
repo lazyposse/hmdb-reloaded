@@ -14,6 +14,10 @@ aspect SnijureAspect {
 
   private Callback callback = cb;
 
+  public static void setCallback(Callback callback) {
+      cb = callback;
+  }
+
   Object around(): methodsOfInterest()  {
       System.out.println("-----> " + Arrays.deepToString(pkgs));
 
