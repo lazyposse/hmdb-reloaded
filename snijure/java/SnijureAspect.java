@@ -1,16 +1,26 @@
-aspect WhereDoesTheTimeGo {
+import java.util.Arrays;
+
+aspect SnijureAspect {
 
   pointcut methodsOfInterest(): execution(* *(..))        &&
-                              !within(WhereDoesTheTimeGo) &&
+                              !within(SnijureAspect) &&
                               !within(CallbackImpl);;
 
   private int nesting = 0;
 
   private static Callback cb = new CallbackImpl();
 
+  private static String[] pkgs = System.getProperty("snijure.pkgs").split(",");
+
   private Callback callback = cb;
 
+  public static void setCallback(Callback callback) {
+      cb = callback;
+  }
+
   Object around(): methodsOfInterest()  {
+      System.out.println("-----> " + Arrays.deepToString(pkgs));
+
       Object sig = thisJoinPoint.getSignature();
       callback.before(sig, thisJoinPoint.getArgs());
       nesting++;
