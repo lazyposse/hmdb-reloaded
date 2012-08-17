@@ -1,4 +1,6 @@
-public class Simple {
+package sample.a;
+
+public class A {
 
   public static void main(String[]argv) {
     countFast(100);
