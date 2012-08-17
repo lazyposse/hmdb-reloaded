@@ -55,9 +55,12 @@ CLOSED: [2012-08-17 Fri 15:25]
 CLOSED: [2012-08-17 Fri 15:32]
 ** TODO add a way to inject the callback to the agent
 ** TODO solve the "aop will intercept anything" problem [%]
-
-
 ** TODO fail fast if the prop =snijure.pgks= has not been given
+* TODO nice to have [%]
+** TODO check the license of aspectJ to know if we can embed it
+
+it would allow to embed the aspectj libs, to avoid the user having to
+install them
 * TODO ideas [%]
 
 ** TODO allow to alter args / return values / exceptions (or even don't throw the exception)
