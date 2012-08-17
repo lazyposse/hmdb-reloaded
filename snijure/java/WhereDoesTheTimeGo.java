@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 aspect WhereDoesTheTimeGo {
 
   pointcut methodsOfInterest(): execution(* *(..))        &&
@@ -8,12 +10,12 @@ aspect WhereDoesTheTimeGo {
 
   private static Callback cb = new CallbackImpl();
 
-  private static String pkg = System.getProperty("snijure.pkg");
+  private static String[] pkgs = System.getProperty("snijure.pkgs").split(",");
 
   private Callback callback = cb;
 
   Object around(): methodsOfInterest()  {
-      System.out.println("-----> " + pkg);
+      System.out.println("-----> " + Arrays.deepToString(pkgs));
 
       Object sig = thisJoinPoint.getSignature();
       callback.before(sig, thisJoinPoint.getArgs());
