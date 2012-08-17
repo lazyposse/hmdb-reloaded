@@ -1,9 +1,9 @@
 import java.util.Arrays;
 
-aspect WhereDoesTheTimeGo {
+aspect SnijureAspect {
 
   pointcut methodsOfInterest(): execution(* *(..))        &&
-                              !within(WhereDoesTheTimeGo) &&
+                              !within(SnijureAspect) &&
                               !within(CallbackImpl);;
 
   private int nesting = 0;

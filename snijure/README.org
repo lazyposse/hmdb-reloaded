@@ -1,7 +1,7 @@
 
 * IN-PROGRESS stuff to do [0%]
 
-** IN-PROGRESS agent code [0%]
+** IN-PROGRESS agent code [25%]
 *** TODO interface of the callback [71%]
 **** TODO add the id of the current thread to all the methods
 
@@ -33,8 +33,7 @@ CLOSED: [2012-08-14 Tue 18:33]
 **** DONE rename AopContext => AspectjConfig
 CLOSED: [2012-08-17 Fri 13:43]
 
-*** IN-PROGRESS let the user specify explicitly what packages should be weaved [66%]
-
+*** TODO let the user specify explicitly what packages should be weaved [66%]
 **** DONE get a sys prop in the agent to get ONE package
 CLOSED: [2012-08-17 Fri 14:59]
 
@@ -44,7 +43,8 @@ CLOSED: [2012-08-17 Fri 15:13]
 **** TODO code the agent so that we weave only the given package(s)
 
 *** TODO add the start of swank in a different thread when the agent is "activated"
-
+*** DONE simplify the makefile by removing the compile time weaving
+CLOSED: [2012-08-17 Fri 15:25]
 
 ** TODO add a way to inject the callback to the agent
 ** TODO solve the "aop will intercept anything" problem [%]
