@@ -1,59 +1,50 @@
-/*
- * Copyright 2011 Janis Kazakovs <janis.kazakovs@opatopa.com>.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import java.util.Arrays;
 
-public @Aspect abstract class SnijureAspect
-{
-    public @Pointcut abstract void logging ( );
+aspect SnijureAspect {
 
-    @Before ( value = "logging()", argNames = "joinPoint" )
-    public void enteringMethod ( JoinPoint joinPoint )
-    {
-        Signature signature = joinPoint.getSignature ( );
-        String className    = signature.getDeclaringType ( ).getSimpleName ( );
-        String methodName   = signature.getName ( );
-        prn("enteringMethod "+className+"::"+methodName);
-    }
+  pointcut methodsOfInterest(): execution(* *(..)) &&
+                                within(sample.a..*);;
 
-    @AfterReturning ( pointcut = "logging()", returning = "returnValue", argNames = "joinPoint,returnValue" )
-    public void leavingMethod ( JoinPoint joinPoint, Object returnValue )
-    {
-        Signature signature = joinPoint.getSignature ( );
-        String className    = signature.getDeclaringType ( ).getSimpleName ( );
-        String methodName   = signature.getName ( );
-        prn("leavingMethod "+className+"::"+methodName);
-    }
+  private int nesting = 0;
 
-    @AfterThrowing ( pointcut = "logging()", throwing = "throwable", argNames = "joinPoint,throwable" )
-    public void leavingMethodException ( JoinPoint joinPoint, Throwable throwable )
-    {
-        Signature signature     = joinPoint.getSignature ( );
-        String className        = signature.getDeclaringType ( ).getSimpleName ( );
-        String methodName       = signature.getName ( );
-        String exceptionMessage = throwable.getMessage ( );
-        prn("leavingMethodException "+className+"::"+methodName+". Reason: "+exceptionMessage);
-    }
+  private static Callback cb = new CallbackImpl();
 
-    private static void prn(String msg) {
-        System.out.println(msg);
-    }
+  private static String[] pkgs = System.getProperty("snijure.pkgs").split(",");
+
+  private Callback callback = cb;
+
+  public static void setCallback(Callback callback) {
+      cb = callback;
+  }
+
+  Object around(): methodsOfInterest()  {
+      System.out.println("-----> " + Arrays.deepToString(pkgs));
+
+      Object sig = thisJoinPoint.getSignature();
+      callback.before(sig, thisJoinPoint.getArgs());
+      nesting++;
+      long stime=System.currentTimeMillis();
+
+      Object o = null;
+      try {
+          o = proceed();
+      } catch (Throwable t) {
+          callback.afterThrow(t);
+          // TODO fix me
+          throw new RuntimeException(t);
+      }
+
+      long etime=System.currentTimeMillis();
+      nesting--;
+
+      callback.after(o);
+
+      StringBuilder info = new StringBuilder();
+      for (int i=0;i<nesting;i++) {
+          info.append("  ");
+      }
+      info.append(thisJoinPoint+" took "+(etime-stime)+"ms");
+      System.out.println(info.toString());
+      return o;
+  }
 }

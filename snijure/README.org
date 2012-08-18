@@ -33,7 +33,7 @@ CLOSED: [2012-08-14 Tue 18:33]
 **** DONE rename AopContext => AspectjConfig
 CLOSED: [2012-08-17 Fri 13:43]
 
-*** TODO let the user specify explicitly what packages should be weaved [83%]
+*** TODO let the user specify explicitly what packages should be weaved [100%]
 **** DONE get a sys prop in the agent to get ONE package
 CLOSED: [2012-08-17 Fri 14:59]
 
@@ -61,11 +61,13 @@ CLOSED: [2012-08-17 Fri 16:53]
 ***** CANCELLED get the property given by the user to get which package to weave
 CLOSED: [2012-08-18 Sat 02:48]
 
-**** IN-PROGRESS need to rework all the stuff to declare the pointcut in the aop.xml instead of the Aspect.java [50%]
+**** DONE need to rework all the stuff to declare the pointcut in the aop.xml instead of the Aspect.java [100%]
+CLOSED: [2012-08-18 Sat 03:19]
 
 ***** DONE backup the current aspect has it has valuable code in it
 CLOSED: [2012-08-18 Sat 02:55]
-***** TODO to the actual rewrite with aop.xml
+***** DONE to the actual rewrite with aop.xml
+CLOSED: [2012-08-18 Sat 03:19]
 
 *** TODO add the start of swank in a different thread when the agent is "activated"
 *** DONE simplify the makefile by removing the compile time weaving
