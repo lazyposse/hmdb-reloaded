@@ -61,7 +61,12 @@ CLOSED: [2012-08-17 Fri 16:53]
 ***** CANCELLED get the property given by the user to get which package to weave
 CLOSED: [2012-08-18 Sat 02:48]
 
-**** TODO need to rework all the stuff to declare the pointcut in the aop.xml instead of the Aspect.java
+**** IN-PROGRESS need to rework all the stuff to declare the pointcut in the aop.xml instead of the Aspect.java [50%]
+
+***** DONE backup the current aspect has it has valuable code in it
+CLOSED: [2012-08-18 Sat 02:55]
+***** TODO to the actual rewrite with aop.xml
+
 *** TODO add the start of swank in a different thread when the agent is "activated"
 *** DONE simplify the makefile by removing the compile time weaving
 CLOSED: [2012-08-17 Fri 15:25]
