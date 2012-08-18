@@ -26,6 +26,8 @@ public @Aspect abstract class SnijureAspect
 {
     public @Pointcut abstract void logging ( );
 
+    private Callback cb = new CallbackImpl();
+
     @Before ( value = "logging()", argNames = "joinPoint" )
     public void enteringMethod ( JoinPoint joinPoint )
     {
@@ -33,7 +35,8 @@ public @Aspect abstract class SnijureAspect
         String className    = signature.getDeclaringType ( ).getSimpleName ( );
         String methodName   = signature.getName ( );
         Object[] args       = joinPoint.getArgs();
-        prn("enteringMethod "+className+"::"+methodName+"::args="+Arrays.deepToString(args));
+        //        prn("enteringMethod "+className+"::"+methodName+"::args="+Arrays.deepToString(args));
+        cb.before(className,methodName,args);
     }
 
     @AfterReturning ( pointcut = "logging()", returning = "returnValue", argNames = "joinPoint,returnValue" )
@@ -42,7 +45,8 @@ public @Aspect abstract class SnijureAspect
         Signature signature = joinPoint.getSignature ( );
         String className    = signature.getDeclaringType ( ).getSimpleName ( );
         String methodName   = signature.getName ( );
-        prn("leavingMethod "+className+"::"+methodName);
+        //        prn("leavingMethod "+className+"::"+methodName);
+        cb.afterReturning(className,methodName,returnValue);
     }
 
     @AfterThrowing ( pointcut = "logging()", throwing = "throwable", argNames = "joinPoint,throwable" )
@@ -52,7 +56,8 @@ public @Aspect abstract class SnijureAspect
         String className        = signature.getDeclaringType ( ).getSimpleName ( );
         String methodName       = signature.getName ( );
         String exceptionMessage = throwable.getMessage ( );
-        prn("leavingMethodException "+className+"::"+methodName+". Reason: "+exceptionMessage);
+        //        prn("leavingMethodException "+className+"::"+methodName+". Reason: "+exceptionMessage);
+        cb.afterThrowing(className,methodName,throwable);
     }
 
     private static void prn(String msg) {

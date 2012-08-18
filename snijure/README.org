@@ -1,7 +1,7 @@
 
 * IN-PROGRESS stuff to do [0%]
 
-** IN-PROGRESS agent code [50%]
+** IN-PROGRESS agent code [57%]
 *** TODO interface of the callback [71%]
 **** TODO add the id of the current thread to all the methods
 
@@ -78,9 +78,14 @@ CLOSED: [2012-08-17 Fri 15:32]
 
 *** DONE update the aspect to also log the args
 CLOSED: [2012-08-18 Sat 17:51]
+*** DONE update the callback interface to match more closely the aspectj wording
+CLOSED: [2012-08-18 Sat 18:18]
 ** TODO add a way to inject the callback to the agent
 ** TODO solve the "aop will intercept anything" problem [%]
 ** TODO fail fast if the prop =snijure.pgks= has not been given
+** TODO refactoring [0%]
+*** TODO properly format the java code
+*** TODO rename callback => snijureCallback
 * TODO nice to have [%]
 ** TODO check the license of aspectJ to know if we can embed it
 
