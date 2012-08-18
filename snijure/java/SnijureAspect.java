@@ -20,6 +20,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import java.util.Arrays;
 
 public @Aspect abstract class SnijureAspect
 {
@@ -31,7 +32,8 @@ public @Aspect abstract class SnijureAspect
         Signature signature = joinPoint.getSignature ( );
         String className    = signature.getDeclaringType ( ).getSimpleName ( );
         String methodName   = signature.getName ( );
-        prn("enteringMethod "+className+"::"+methodName);
+        Object[] args       = joinPoint.getArgs();
+        prn("enteringMethod "+className+"::"+methodName+"::args="+Arrays.deepToString(args));
     }
 
     @AfterReturning ( pointcut = "logging()", returning = "returnValue", argNames = "joinPoint,returnValue" )
