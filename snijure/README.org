@@ -33,7 +33,7 @@ CLOSED: [2012-08-14 Tue 18:33]
 **** DONE rename AopContext => AspectjConfig
 CLOSED: [2012-08-17 Fri 13:43]
 
-*** TODO let the user specify explicitly what packages should be weaved [66%]
+*** TODO let the user specify explicitly what packages should be weaved [83%]
 **** DONE get a sys prop in the agent to get ONE package
 CLOSED: [2012-08-17 Fri 14:59]
 
@@ -45,11 +45,23 @@ CLOSED: [2012-08-17 Fri 15:56]
 
 **** DONE create a new class in a different package to test the selectiveness of the aspects
 CLOSED: [2012-08-17 Fri 16:11]
-**** IN-PROGRESS code the agent so that we weave only the given package(s) [50%]
+**** CANCELLED code the agent so that we weave only the given package(s) [100%]
+CLOSED: [2012-08-18 Sat 02:48]
+
+Can't do.
+
+It was a wrong lead, as I don't know how to get pkg to weave after
+compiling the aspect.
+
+To do that we should use =aop.xml=, which allow to specify in an xml
+file what to intercept (classes, method calls, ...)
+
 ***** DONE hard code the agent so that it weaves only the A class
 CLOSED: [2012-08-17 Fri 16:53]
-***** TODO get the property given by the user to get which package to weave
+***** CANCELLED get the property given by the user to get which package to weave
+CLOSED: [2012-08-18 Sat 02:48]
 
+**** TODO need to rework all the stuff to declare the pointcut in the aop.xml instead of the Aspect.java
 *** TODO add the start of swank in a different thread when the agent is "activated"
 *** DONE simplify the makefile by removing the compile time weaving
 CLOSED: [2012-08-17 Fri 15:25]
