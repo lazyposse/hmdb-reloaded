@@ -4,18 +4,24 @@ AJC_RT=$(LIB)/aspectjrt.jar
 AJC_WE=$(LIB)/aspectjweaver.jar
 
 clean:
-	rm -f *.class *.jar
+	find . -name '*.jar' -exec rm {} \; ; find . -name '*.class' -exec rm {} \;
 
-Simple.class: Simple.java
-	javac Simple.java
+sample/a/A.class: sample/a/A.java
+	javac sample/a/A.java
 
-run: Simple.class
-	java Simple
+sample/b/B.class: sample/b/B.java
+	javac sample/b/B.java
 
-snijure-agent.jar: SnijureAspect.java
-	$(AJC) -cp $(AJC_RT) SnijureAspect.java Callback.java CallbackImpl.java -outxml -outjar snijure-agent.jar
+sample/Main.class: sample/Main.java sample/a/A.class sample/b/B.class
+	javac sample/Main.java
 
-run-load-time-weaving: Simple.class snijure-agent.jar
+run: sample/Main.class
+	java sample.Main
+
+snijure-agent.jar: SnijureAspect.java Callback.java CallbackImpl.java
+	$(AJC) -1.6 -cp $(AJC_RT) SnijureAspect.java Callback.java CallbackImpl.java -outjar snijure-agent.jar
+
+run-load-time-weaving: sample/Main.class snijure-agent.jar
 	java -Dsnijure.pkgs=foo,bar    \
              -javaagent":$(AJC_WE)" \
-             -classpath ".:snijure-agent.jar:$(AJC_RT)" Simple
+             -classpath ".:snijure-agent.jar:$(AJC_RT)" sample.Main
