@@ -1,4 +1,6 @@
-public class Simple {
+package sample.a;
+
+public class A {
 
   public static void main(String[]argv) {
     countFast(100);
@@ -28,4 +30,8 @@ public class Simple {
       try {Thread.sleep(delay);} catch (Exception e) {}
     }
   }
+
+    public static void a() {
+        System.out.println("        This is A!");
+    }
 }
