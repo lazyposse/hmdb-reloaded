@@ -7,10 +7,10 @@ public class Main {
     public static final void main(String[] args) {
         prn("Main ...");
         prn("    Calling A.a() ...");
-        A.a();
+        A.a("The time is now: "+ new java.util.Date());
         prn("    Calling A.a() DONE");
         prn("    Calling B.b() ...");
-        B.b();
+        B.b("The time is now: "+ new java.util.Date());
         prn("    Calling B.b() DONE");
         prn("Main DONE");
     }

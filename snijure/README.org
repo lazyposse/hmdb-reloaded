@@ -1,7 +1,7 @@
 
 * IN-PROGRESS stuff to do [0%]
 
-** IN-PROGRESS agent code [40%]
+** IN-PROGRESS agent code [75%]
 *** TODO interface of the callback [71%]
 **** TODO add the id of the current thread to all the methods
 
@@ -33,7 +33,11 @@ CLOSED: [2012-08-14 Tue 18:33]
 **** DONE rename AopContext => AspectjConfig
 CLOSED: [2012-08-17 Fri 13:43]
 
-*** TODO let the user specify explicitly what packages should be weaved [100%]
+*** CANCELLED let the user specify explicitly what packages should be weaved (with properties) [100%]
+CLOSED: [2012-08-18 Sat 18:32]
+
+won't do, it will be done by configuring the =aop.xml=
+
 **** DONE get a sys prop in the agent to get ONE package
 CLOSED: [2012-08-17 Fri 14:59]
 
@@ -69,15 +73,25 @@ CLOSED: [2012-08-18 Sat 02:55]
 ***** DONE to the actual rewrite with aop.xml
 CLOSED: [2012-08-18 Sat 03:19]
 
-*** TODO add the start of swank in a different thread when the agent is "activated"
+*** IN-PROGRESS add the start of swank in a different thread when the agent is "activated"
 *** DONE simplify the makefile by removing the compile time weaving
 CLOSED: [2012-08-17 Fri 15:25]
 
 *** DONE [improvement] we dont need another class to inject the callback, because the code for the aspect will be compiled as a class so we just need to provide a setter
 CLOSED: [2012-08-17 Fri 15:32]
+
+*** DONE update the aspect to also log the args
+CLOSED: [2012-08-18 Sat 17:51]
+*** DONE update the callback interface to match more closely the aspectj wording
+CLOSED: [2012-08-18 Sat 18:18]
+*** DONE add callback setter to the new aspect
+CLOSED: [2012-08-18 Sat 18:31]
 ** TODO add a way to inject the callback to the agent
 ** TODO solve the "aop will intercept anything" problem [%]
 ** TODO fail fast if the prop =snijure.pgks= has not been given
+** TODO refactoring [0%]
+*** TODO properly format the java code
+*** TODO rename callback => snijureCallback
 * TODO nice to have [%]
 ** TODO check the license of aspectJ to know if we can embed it
 
