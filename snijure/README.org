@@ -1,7 +1,7 @@
 
 * IN-PROGRESS stuff to do [0%]
 
-** IN-PROGRESS agent code [57%]
+** IN-PROGRESS agent code [62%]
 *** TODO interface of the callback [71%]
 **** TODO add the id of the current thread to all the methods
 
@@ -80,6 +80,8 @@ CLOSED: [2012-08-17 Fri 15:32]
 CLOSED: [2012-08-18 Sat 17:51]
 *** DONE update the callback interface to match more closely the aspectj wording
 CLOSED: [2012-08-18 Sat 18:18]
+*** DONE add callback setter to the new aspect
+CLOSED: [2012-08-18 Sat 18:31]
 ** TODO add a way to inject the callback to the agent
 ** TODO solve the "aop will intercept anything" problem [%]
 ** TODO fail fast if the prop =snijure.pgks= has not been given

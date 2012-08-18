@@ -20,13 +20,16 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import java.util.Arrays;
 
 public @Aspect abstract class SnijureAspect
 {
     public @Pointcut abstract void logging ( );
 
-    private Callback cb = new CallbackImpl();
+    private static Callback cb = new CallbackImpl();
+
+    public static void setCallback(Callback callback) {
+        cb = callback;
+    }
 
     @Before ( value = "logging()", argNames = "joinPoint" )
     public void enteringMethod ( JoinPoint joinPoint )
@@ -35,8 +38,9 @@ public @Aspect abstract class SnijureAspect
         String className    = signature.getDeclaringType ( ).getSimpleName ( );
         String methodName   = signature.getName ( );
         Object[] args       = joinPoint.getArgs();
-        //        prn("enteringMethod "+className+"::"+methodName+"::args="+Arrays.deepToString(args));
-        cb.before(className,methodName,args);
+        if (cb != null) {
+            cb.before(className,methodName,args);
+        }
     }
 
     @AfterReturning ( pointcut = "logging()", returning = "returnValue", argNames = "joinPoint,returnValue" )
@@ -45,8 +49,9 @@ public @Aspect abstract class SnijureAspect
         Signature signature = joinPoint.getSignature ( );
         String className    = signature.getDeclaringType ( ).getSimpleName ( );
         String methodName   = signature.getName ( );
-        //        prn("leavingMethod "+className+"::"+methodName);
-        cb.afterReturning(className,methodName,returnValue);
+        if (cb != null) {
+            cb.afterReturning(className,methodName,returnValue);
+        }
     }
 
     @AfterThrowing ( pointcut = "logging()", throwing = "throwable", argNames = "joinPoint,throwable" )
@@ -56,11 +61,8 @@ public @Aspect abstract class SnijureAspect
         String className        = signature.getDeclaringType ( ).getSimpleName ( );
         String methodName       = signature.getName ( );
         String exceptionMessage = throwable.getMessage ( );
-        //        prn("leavingMethodException "+className+"::"+methodName+". Reason: "+exceptionMessage);
-        cb.afterThrowing(className,methodName,throwable);
-    }
-
-    private static void prn(String msg) {
-        System.out.println(msg);
+        if (cb != null) {
+            cb.afterThrowing(className,methodName,throwable);
+        }
     }
 }
