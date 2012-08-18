@@ -25,13 +25,22 @@ public @Aspect abstract class SnijureAspect
 {
     public @Pointcut abstract void logging ( );
 
+    private static Callback cb = new CallbackImpl();
+
+    public static void setCallback(Callback callback) {
+        cb = callback;
+    }
+
     @Before ( value = "logging()", argNames = "joinPoint" )
     public void enteringMethod ( JoinPoint joinPoint )
     {
         Signature signature = joinPoint.getSignature ( );
         String className    = signature.getDeclaringType ( ).getSimpleName ( );
         String methodName   = signature.getName ( );
-        prn("enteringMethod "+className+"::"+methodName);
+        Object[] args       = joinPoint.getArgs();
+        if (cb != null) {
+            cb.before(className,methodName,args);
+        }
     }
 
     @AfterReturning ( pointcut = "logging()", returning = "returnValue", argNames = "joinPoint,returnValue" )
@@ -40,7 +49,9 @@ public @Aspect abstract class SnijureAspect
         Signature signature = joinPoint.getSignature ( );
         String className    = signature.getDeclaringType ( ).getSimpleName ( );
         String methodName   = signature.getName ( );
-        prn("leavingMethod "+className+"::"+methodName);
+        if (cb != null) {
+            cb.afterReturning(className,methodName,returnValue);
+        }
     }
 
     @AfterThrowing ( pointcut = "logging()", throwing = "throwable", argNames = "joinPoint,throwable" )
@@ -50,10 +61,8 @@ public @Aspect abstract class SnijureAspect
         String className        = signature.getDeclaringType ( ).getSimpleName ( );
         String methodName       = signature.getName ( );
         String exceptionMessage = throwable.getMessage ( );
-        prn("leavingMethodException "+className+"::"+methodName+". Reason: "+exceptionMessage);
-    }
-
-    private static void prn(String msg) {
-        System.out.println(msg);
+        if (cb != null) {
+            cb.afterThrowing(className,methodName,throwable);
+        }
     }
 }

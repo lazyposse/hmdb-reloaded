@@ -31,7 +31,7 @@ public class A {
     }
   }
 
-    public static void a() {
-        System.out.println("        This is A!");
+    public static void a(String msg) {
+        System.out.println("        This is A!, msg="+msg);
     }
 }
