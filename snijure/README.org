@@ -45,10 +45,15 @@ CLOSED: [2012-08-17 Fri 15:56]
 
 **** DONE create a new class in a different package to test the selectiveness of the aspects
 CLOSED: [2012-08-17 Fri 16:11]
-**** IN-PROGRESS code the agent so that we weave only the given package(s) [50%]
+**** IN-PROGRESS code the agent so that we weave only the given package(s) [100%]
 ***** DONE hard code the agent so that it weaves only the A class
 CLOSED: [2012-08-17 Fri 16:53]
-***** TODO get the property given by the user to get which package to weave
+***** CANCELLED get the property given by the user to get which package to weave
+CLOSED: [2012-08-17 Fri 16:56]
+
+don't know how to do that, but there's a config file for that ! (aop.xml)
+***** CANCELLED use the aop.xml file to specify which classes to weave
+CLOSED: [2012-08-18 Sat 02:46]
 
 *** TODO add the start of swank in a different thread when the agent is "activated"
 *** DONE simplify the makefile by removing the compile time weaving

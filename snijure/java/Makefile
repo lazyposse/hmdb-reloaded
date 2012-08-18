@@ -19,7 +19,7 @@ run: sample/Main.class
 	java sample.Main
 
 snijure-agent.jar: SnijureAspect.java Callback.java CallbackImpl.java
-	$(AJC) -cp $(AJC_RT) SnijureAspect.java Callback.java CallbackImpl.java -outxml -outjar snijure-agent.jar
+	$(AJC) -1.6 -cp $(AJC_RT) SnijureAspect.java Callback.java CallbackImpl.java -outjar snijure-agent.jar
 
 run-load-time-weaving: sample/Main.class snijure-agent.jar
 	java -Dsnijure.pkgs=foo,bar    \
