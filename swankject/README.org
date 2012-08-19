@@ -73,7 +73,16 @@ CLOSED: [2012-08-18 Sat 02:55]
 ***** DONE to the actual rewrite with aop.xml
 CLOSED: [2012-08-18 Sat 03:19]
 
-*** IN-PROGRESS add the start of swank in a different thread when the agent is "activated"
+*** IN-PROGRESS add the start of swank in a different thread when the agent is "activated" [33%]
+
+**** DONE leinification of the project as it begins to need a lot of deps
+CLOSED: [2012-08-19 Sun 03:02]
+
+**** IN-PROGRESS add the swank deps in project.clj
+
+**** TODO start the swank server at the loading of the agent
+
+
 *** DONE simplify the makefile by removing the compile time weaving
 CLOSED: [2012-08-17 Fri 15:25]
 
@@ -92,6 +101,11 @@ CLOSED: [2012-08-18 Sat 18:31]
 ** TODO refactoring [0%]
 *** TODO properly format the java code
 *** TODO rename callback => snijureCallback
+*** TODO rename the project swankject
+
+That's because I ve got the warning by leiningen that clojure projects
+finishing by 'jure' aren't welcome :)
+
 * TODO nice to have [%]
 ** TODO check the license of aspectJ to know if we can embed it
 
