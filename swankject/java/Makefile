@@ -18,10 +18,9 @@ sample/Main.class: sample/Main.java sample/a/A.class sample/b/B.class
 run: sample/Main.class
 	java sample.Main
 
-snijure-agent.jar: SnijureAspect.java Callback.java CallbackImpl.java
-	$(AJC) -1.6 -cp $(AJC_RT) SnijureAspect.java Callback.java CallbackImpl.java -outjar snijure-agent.jar
+swankject-agent.jar: SwankjectAspect.java Callback.java CallbackImpl.java
+	$(AJC) -1.6 -cp $(AJC_RT) SwankjectAspect.java Callback.java CallbackImpl.java -outjar swankject-agent.jar
 
-run-load-time-weaving: sample/Main.class snijure-agent.jar
-	java -Dsnijure.pkgs=foo,bar    \
-             -javaagent":$(AJC_WE)" \
-             -classpath ".:snijure-agent.jar:$(AJC_RT)" sample.Main
+run-load-time-weaving: sample/Main.class swankject-agent.jar
+	java -javaagent":$(AJC_WE)" \
+             -classpath ".:swankject-agent.jar:$(AJC_RT)" sample.Main

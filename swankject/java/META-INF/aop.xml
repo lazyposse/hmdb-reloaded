@@ -1,6 +1,6 @@
 <aspectj>
   <aspects>
-    <concrete-aspect name="SnijureAspectImpl" extends="SnijureAspect">
+    <concrete-aspect name="SwankjectAspectImpl" extends="SwankjectAspect">
       <pointcut name="logging" expression="within(sample.b.*) &amp;&amp; execution(* *(..))"/>
     </concrete-aspect>
   </aspects>

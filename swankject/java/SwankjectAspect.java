@@ -21,7 +21,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 
-public @Aspect abstract class SnijureAspect
+public @Aspect abstract class SwankjectAspect
 {
     public @Pointcut abstract void logging ( );
 
