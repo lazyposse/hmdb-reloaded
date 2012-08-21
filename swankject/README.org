@@ -1,7 +1,7 @@
 
 * IN-PROGRESS stuff to do [16%]
 
-** IN-PROGRESS agent code [75%]
+** TODO agent code [88%]
 *** TODO interface of the callback [71%]
 **** TODO add the id of the current thread to all the methods
 
@@ -73,7 +73,8 @@ CLOSED: [2012-08-18 Sat 02:55]
 ***** DONE to the actual rewrite with aop.xml
 CLOSED: [2012-08-18 Sat 03:19]
 
-*** IN-PROGRESS add the start of swank in a different thread when the agent is "activated" [100%]
+*** DONE add the start of swank in a different thread when the agent is "activated" [100%]
+CLOSED: [2012-08-21 Tue 13:30]
 
 **** DONE leinification of the project as it begins to need a lot of deps
 CLOSED: [2012-08-19 Sun 03:02]
@@ -83,7 +84,6 @@ CLOSED: [2012-08-21 Tue 13:18]
 
 **** DONE code the start the swank server
 CLOSED: [2012-08-21 Tue 13:28]
-
 
 *** DONE simplify the makefile by removing the compile time weaving
 CLOSED: [2012-08-17 Fri 15:25]
@@ -97,7 +97,12 @@ CLOSED: [2012-08-18 Sat 17:51]
 CLOSED: [2012-08-18 Sat 18:18]
 *** DONE add callback setter to the new aspect
 CLOSED: [2012-08-18 Sat 18:31]
+*** DONE add some example when connected to the sample app
+CLOSED: [2012-08-21 Tue 14:20]
 ** TODO add a way to inject the callback to the agent
+
+
+
 ** TODO solve the "aop will intercept anything" problem [%]
 ** TODO fail fast if the prop =snijure.pgks= has not been given
 ** TODO refactoring [0%]
