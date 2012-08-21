@@ -2,6 +2,7 @@ AJC=$(ASPECTJ_HOME)/bin/ajc
 LIB=$(ASPECTJ_HOME)/lib
 AJC_RT=$(LIB)/aspectjrt.jar
 AJC_WE=$(LIB)/aspectjweaver.jar
+CLJ_LIB=../target/swankject-0.1.0-SNAPSHOT-standalone.jar
 
 clean:
 	find . -name '*.jar' -exec rm {} \; ; find . -name '*.class' -exec rm {} \;
@@ -18,9 +19,12 @@ sample/Main.class: sample/Main.java sample/a/A.class sample/b/B.class
 run: sample/Main.class
 	java sample.Main
 
-swankject-agent.jar: SwankjectAspect.java Callback.java CallbackImpl.java
-	$(AJC) -1.6 -cp $(AJC_RT) SwankjectAspect.java Callback.java CallbackImpl.java -outjar swankject-agent.jar
+$(CLJ_LIB):
+	cd .. && lein uberjar
 
-run-load-time-weaving: sample/Main.class swankject-agent.jar
+swankject-agent.jar: SwankjectAspect.java Callback.java CallbackImpl.java $(CLJ_LIB)
+	$(AJC) -1.6 -cp "$(AJC_RT):$(CLJ_LIB)" SwankjectAspect.java Callback.java CallbackImpl.java -outjar swankject-agent.jar
+
+run-load-time-weaving: sample/Main.class swankject-agent.jar $(CLJ_LIB)
 	java -javaagent":$(AJC_WE)" \
-             -classpath ".:swankject-agent.jar:$(AJC_RT)" sample.Main
+             -classpath ".:swankject-agent.jar:$(AJC_RT):$(CLJ_LIB)" sample.Main

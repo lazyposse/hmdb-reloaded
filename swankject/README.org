@@ -1,5 +1,5 @@
 
-* IN-PROGRESS stuff to do [0%]
+* IN-PROGRESS stuff to do [16%]
 
 ** IN-PROGRESS agent code [75%]
 *** TODO interface of the callback [71%]
@@ -73,14 +73,15 @@ CLOSED: [2012-08-18 Sat 02:55]
 ***** DONE to the actual rewrite with aop.xml
 CLOSED: [2012-08-18 Sat 03:19]
 
-*** IN-PROGRESS add the start of swank in a different thread when the agent is "activated" [33%]
+*** IN-PROGRESS add the start of swank in a different thread when the agent is "activated" [66%]
 
 **** DONE leinification of the project as it begins to need a lot of deps
 CLOSED: [2012-08-19 Sun 03:02]
 
-**** TODO add the swank deps in project.clj
+**** DONE add the swank deps in project.clj
+CLOSED: [2012-08-21 Tue 13:18]
 
-**** TODO start the swank server at the loading of the agent
+**** TODO code the start the swank server
 
 
 *** DONE simplify the makefile by removing the compile time weaving
@@ -106,7 +107,8 @@ CLOSED: [2012-08-18 Sat 18:31]
 That's because I ve got the warning by leiningen that clojure projects
 finishing by 'jure' aren't welcome :)
 
-** TODO transverse stuff [100%]
+** DONE transverse stuff [100%]
+CLOSED: [2012-08-20 Mon 08:16]
 
 *** DONE rework the .gitignore for the subproject swankject
 CLOSED: [2012-08-20 Mon 08:14]
