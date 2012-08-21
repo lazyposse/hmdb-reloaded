@@ -73,7 +73,7 @@ CLOSED: [2012-08-18 Sat 02:55]
 ***** DONE to the actual rewrite with aop.xml
 CLOSED: [2012-08-18 Sat 03:19]
 
-*** IN-PROGRESS add the start of swank in a different thread when the agent is "activated" [66%]
+*** IN-PROGRESS add the start of swank in a different thread when the agent is "activated" [100%]
 
 **** DONE leinification of the project as it begins to need a lot of deps
 CLOSED: [2012-08-19 Sun 03:02]
@@ -81,7 +81,8 @@ CLOSED: [2012-08-19 Sun 03:02]
 **** DONE add the swank deps in project.clj
 CLOSED: [2012-08-21 Tue 13:18]
 
-**** TODO code the start the swank server
+**** DONE code the start the swank server
+CLOSED: [2012-08-21 Tue 13:28]
 
 
 *** DONE simplify the makefile by removing the compile time weaving
