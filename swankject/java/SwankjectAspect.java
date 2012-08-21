@@ -20,9 +20,27 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import clojure.lang.Compiler;
+import java.io.StringReader;
 
 public @Aspect abstract class SwankjectAspect
 {
+    static {
+        new Thread() {
+            public void run() {
+                try {
+                    final String startSwankScript =
+                        "(ns my-app\n" +
+                        "  (:use [swank.swank :as swank]))\n" +
+                        "(swank/start-repl) ";
+                    Compiler.load(new StringReader(startSwankScript));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }.start();
+    }
+
     public @Pointcut abstract void logging ( );
 
     private static Callback cb = new CallbackImpl();
