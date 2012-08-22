@@ -8,7 +8,9 @@
 ;; * then you can use the forms below to test it
 ;;
 (ns swankject
-  [:require [clojure.repl :as r]]
+  [:require
+   [clojure.repl         :as r]
+   [clojure.java.javadoc :as jd]]
   [:import
    [swankject SwankjectAspect Callback CallbackImpl]
    [sample    Main]
