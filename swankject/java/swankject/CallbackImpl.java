@@ -4,26 +4,26 @@ import java.util.Arrays;
 
 public class CallbackImpl implements Callback {
 
-    public void before(String className , String methodName, Object[] args) {
+    public void before(Thread t, String className , String methodName, Object[] args) {
         prn("");
         prn("--- before ----------->");
-        prn("    "+className+"."+methodName+" "+Arrays.deepToString(args));
+        prn("    ("+t+") "+className+"."+methodName+" "+Arrays.deepToString(args));
         prn("---------------------->");
         prn("");
     }
 
-    public void afterReturning (String className, String methodName, Object returnValue) {
+    public void afterReturning (Thread t, String className, String methodName, Object returnValue) {
         prn("");
         prn("<-- afterReturning ----");
-        prn("    "+className+"."+methodName+" => "+returnValue);
+        prn("    ("+t+") "+className+"."+methodName+" => "+returnValue);
         prn("<----------------------");
         prn("");
     }
 
-    public void afterThrowing (String className, String methodName, Throwable t) {
+    public void afterThrowing (Thread t, String className, String methodName, Throwable th) {
         prn("");
         prn("<-- afterThrowing -----");
-        prn("    "+className+"."+methodName+" throwed "+t);
+        prn("    ("+t+") "+className+"."+methodName+" throwed "+th);
         prn("<----------------------");
         prn("");
     }
