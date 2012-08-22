@@ -1,7 +1,7 @@
 package swankject;
 
 public interface Callback {
-    void before         (String className, String methodName, Object[]  args       );
-    void afterReturning (String className, String methodName, Object    returnValue);
-    void afterThrowing  (String className, String methodName, Throwable t          );
+    void before         (Thread t, String className, String methodName, Object[]  args       );
+    void afterReturning (Thread t, String className, String methodName, Object    returnValue);
+    void afterThrowing  (Thread t, String className, String methodName, Throwable th         );
 }

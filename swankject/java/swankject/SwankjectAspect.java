@@ -58,8 +58,9 @@ public @Aspect abstract class SwankjectAspect
         String className    = signature.getDeclaringType ( ).getSimpleName ( );
         String methodName   = signature.getName ( );
         Object[] args       = joinPoint.getArgs();
+        Thread thread       = Thread.currentThread();
         if (cb != null) {
-            cb.before(className,methodName,args);
+            cb.before(thread, className,methodName,args);
         }
     }
 
@@ -69,8 +70,9 @@ public @Aspect abstract class SwankjectAspect
         Signature signature = joinPoint.getSignature ( );
         String className    = signature.getDeclaringType ( ).getSimpleName ( );
         String methodName   = signature.getName ( );
+        Thread thread       = Thread.currentThread();
         if (cb != null) {
-            cb.afterReturning(className,methodName,returnValue);
+            cb.afterReturning(thread, className,methodName,returnValue);
         }
     }
 
@@ -81,8 +83,9 @@ public @Aspect abstract class SwankjectAspect
         String className        = signature.getDeclaringType ( ).getSimpleName ( );
         String methodName       = signature.getName ( );
         String exceptionMessage = throwable.getMessage ( );
+        Thread thread       = Thread.currentThread();
         if (cb != null) {
-            cb.afterThrowing(className,methodName,throwable);
+            cb.afterThrowing(thread, className,methodName,throwable);
         }
     }
 }

@@ -10,7 +10,8 @@
 (ns swankject
   [:require
    [clojure.repl         :as r]
-   [clojure.java.javadoc :as jd]]
+   [clojure.java.javadoc :as jd]
+   [clojure.pprint       :as pp]]
   [:import
    [swankject SwankjectAspect Callback CallbackImpl]
    [sample    Main]
@@ -34,11 +35,11 @@
 ;; implement a callback in clojure
 
 (def p (proxy [Callback] []
-         (before [class method args]
+         (before [t class method args]
            (prn "before"))
-         (afterReturning [class method ret]
+         (afterReturning [t class method ret]
            (prn "afterReturning"))
-         (afterThrowing [class method throwable]
+         (afterThrowing [t class method throwable]
            (prn "afterThrowing"))))
 
 ;; set it

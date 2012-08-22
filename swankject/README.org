@@ -1,9 +1,12 @@
 
-* IN-PROGRESS stuff to do [40%]
+* IN-PROGRESS stuff to do [60%]
 
-** TODO agent code [88%]
-*** TODO interface of the callback [71%]
-**** TODO add the id of the current thread to all the methods
+** DONE agent code [100%]
+CLOSED: [2012-08-22 Wed 13:37]
+*** DONE interface of the callback [100%]
+CLOSED: [2012-08-22 Wed 13:37]
+**** DONE add the id of the current thread to all the methods
+CLOSED: [2012-08-22 Wed 13:37]
 
 **** CANCELLED put java classes in a proper package
 CLOSED: [2012-08-17 Fri 14:44]
