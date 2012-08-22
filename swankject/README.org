@@ -99,12 +99,14 @@ CLOSED: [2012-08-18 Sat 18:18]
 CLOSED: [2012-08-18 Sat 18:31]
 *** DONE add some example when connected to the sample app
 CLOSED: [2012-08-21 Tue 14:20]
-** IN-PROGRESS add a way to inject the callback to the agent [0%]
-*** IN-PROGRESS We need to put the Aspect code in a proper pkg
+** IN-PROGRESS add a way to inject the callback to the agent [66%]
+*** DONE We need to put the Aspect code in a proper pkg
+CLOSED: [2012-08-22 Wed 08:18]
 
 Because I don't know how to use default package classes in clojure
-
-*** TODO verify that we can inject a clj code in the callback
+*** DONE verify that we can remove the callback and put it again in clj
+CLOSED: [2012-08-22 Wed 08:29]
+*** IN-PROGRESS verify that we can inject a clj code in the callback
 
 
 
