@@ -1,5 +1,5 @@
 
-* IN-PROGRESS stuff to do [16%]
+* IN-PROGRESS stuff to do [0%]
 
 ** TODO agent code [88%]
 *** TODO interface of the callback [71%]
@@ -99,30 +99,45 @@ CLOSED: [2012-08-18 Sat 18:18]
 CLOSED: [2012-08-18 Sat 18:31]
 *** DONE add some example when connected to the sample app
 CLOSED: [2012-08-21 Tue 14:20]
-** TODO add a way to inject the callback to the agent
+** IN-PROGRESS add a way to inject the callback to the agent [0%]
+*** IN-PROGRESS We need to put the Aspect code in a proper pkg
+
+Because I don't know how to use default package classes in clojure
+
+*** TODO verify that we can inject a clj code in the callback
 
 
 
 ** TODO solve the "aop will intercept anything" problem [%]
 ** TODO fail fast if the prop =snijure.pgks= has not been given
-** TODO refactoring [0%]
-*** TODO properly format the java code
-*** TODO rename callback => snijureCallback
-*** TODO rename the project swankject
+** TODO transverse stuff [50%]
+
+*** DONE rework the .gitignore for the subproject swankject
+CLOSED: [2012-08-20 Mon 08:14]
+
+*** TODO refactoring [0%]
+**** TODO properly format the java code
+**** TODO rename callback => snijureCallback
+**** TODO rename the project swankject
 
 That's because I ve got the warning by leiningen that clojure projects
 finishing by 'jure' aren't welcome :)
 
-** DONE transverse stuff [100%]
-CLOSED: [2012-08-20 Mon 08:16]
 
-*** DONE rework the .gitignore for the subproject swankject
-CLOSED: [2012-08-20 Mon 08:14]
-* TODO nice to have [%]
+
+* TODO nice to have [0%]
 ** TODO check the license of aspectJ to know if we can embed it
 
 it would allow to embed the aspectj libs, to avoid the user having to
 install them
+** TODO before/after/afterThrow => around
+
+because we use before/after/afterThrow instead of around
+we can read but not modify
+it would be nice to be able to modify the args of a method, the return
+value, the execption, ...
+
+
 * TODO ideas [%]
 
 ** TODO allow to alter args / return values / exceptions (or even don't throw the exception)
