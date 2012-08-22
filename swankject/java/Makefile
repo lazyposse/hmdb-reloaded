@@ -22,8 +22,8 @@ run: sample/Main.class
 $(CLJ_LIB):
 	cd .. && lein uberjar
 
-swankject-agent.jar: SwankjectAspect.java Callback.java CallbackImpl.java $(CLJ_LIB)
-	$(AJC) -1.6 -cp "$(AJC_RT):$(CLJ_LIB)" SwankjectAspect.java Callback.java CallbackImpl.java -outjar swankject-agent.jar
+swankject-agent.jar: swankject/SwankjectAspect.java swankject/Callback.java swankject/CallbackImpl.java $(CLJ_LIB)
+	$(AJC) -1.6 -cp "$(AJC_RT):$(CLJ_LIB)" swankject/SwankjectAspect.java swankject/Callback.java swankject/CallbackImpl.java -outjar swankject-agent.jar
 
 run-load-time-weaving: sample/Main.class swankject-agent.jar $(CLJ_LIB)
 	java -javaagent":$(AJC_WE)" \
