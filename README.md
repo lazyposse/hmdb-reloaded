@@ -1,5 +1,8 @@
 # hmdb-reloaded
 
+<img src="https://raw.github.com/denlab/resources/master/images/in-progress.png"
+ alt="Work in progress..." title="Work in progress..." align="middle" />
+
 share vagrant files for the moment
 
 ## Usage
