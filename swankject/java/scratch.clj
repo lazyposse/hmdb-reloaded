@@ -9,9 +9,11 @@
 ;;
 (ns swankject
   [:require
-   [clojure.repl         :as r]
-   [clojure.java.javadoc :as jd]
-   [clojure.pprint       :as pp]]
+   [clojure
+    [repl                :as r]
+    [pprint              :as pp]
+    [inspector           :as ins]]
+   [clojure.java.javadoc :as jd]]
   [:import
    [swankject SwankjectAspect Callback CallbackImpl]
    [sample    Main]
@@ -34,13 +36,33 @@
 
 ;; implement a callback in clojure
 
+;; this datastructure shows the evolution of the atom during the calls
+;; of the callback
+(comment
+  (def design [["before M" {:curr [:main  ]  :stack {:main nil}}]
+               ["before A" {:curr [:main.a]  :stack {:main {:calls [{:a nil}]}}}]
+               ["after  A" {:curr [:main  ]  :stack {:main {:calls [{:a {:ret nil}}]}}}]
+               ["before B" {:curr [:main.b]  :stack {:main {:calls [{:a {:ret nil}}
+                                                                    {:b nil}]}}}]
+               ["after  B" {:curr [:main  ]  :stack {:main {:calls [{:a {:ret nil}}
+                                                                    {:b {:ret nil}}]}}}]
+               ["after  M" {:curr nil        :stack {:main {:calls [{:a {:ret nil}}
+                                                                    {:b {:ret nil}}]
+                                                            :ret    nil}}}]]))
+
+
+(def stack (atom {}))
+
+(defn before [t class method args]
+  (println (str "=>before " class "." method)))
+
 (def p (proxy [Callback] []
          (before [t class method args]
-           (prn "before"))
+           (before t class method args))
          (afterReturning [t class method ret]
-           (prn "afterReturning"))
+           (println "<=afterReturning " class "." method))
          (afterThrowing [t class method throwable]
-           (prn "afterThrowing"))))
+           (println "<=afterThrowing " class "." method))))
 
 ;; set it
 

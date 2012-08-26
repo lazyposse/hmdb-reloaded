@@ -1,7 +1,7 @@
 <aspectj>
   <aspects>
     <concrete-aspect name="swankject.SwankjectAspectImpl" extends="swankject.SwankjectAspect">
-      <pointcut name="logging" expression="within(sample.b.*) &amp;&amp; execution(* *(..))"/>
+      <pointcut name="logging" expression="within(sample.*) &amp;&amp; execution(* *(..))"/>
     </concrete-aspect>
   </aspects>
 </aspectj>
