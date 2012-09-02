@@ -65,7 +65,7 @@
 (Main/main nil)
 
 ;;-----------------------------------------------------------------------------
-;; Implements a callback to records the method calls
+;; Some dev functions
 ;;-----------------------------------------------------------------------------
 
 (defn- get-fn-name
@@ -84,38 +84,56 @@ Usefull for comparing two nested datastructures"
 (defn- loggify
   "For dev: log decorator"
   [f] (fn [& args]
-        (println (str "(" (get-fn-name f) (z/node (first args)) ", method=" (nth args 3) "...)"))
+        (println (str "(" (get-fn-name f)
+                      (z/node (first args))
+                      ", method="
+                      (nth args 3)
+                      "...)"))
         (let [r (apply f args)]
-          (println (str "    =>    " (with-out-str (pprint (z/root (first args))))))
+          (println (str "  =>  " (with-out-str (pprint (z/root (first args))))))
           (println)
           r)))
+
+;;-----------------------------------------------------------------------------
+;; Implements a callback to records the method calls
+;;-----------------------------------------------------------------------------
 
 (defn- insert-child-and-move
   "Like insert-child, but move to the child"
   [n c] (-> n
             (z/insert-child c)
-            (z/down)))
+            z/down))
 
 (defn- append-to-children-and-move
-  "Add the child at the right of the list children, and move to it. "
-  [n c] (z/right (z/insert-right (-> n
-                                     z/down
-                                     z/rightmost)
-                                 c)))
+  "Add the child at the right of the children list, and move to it. "
+  [n c] (let [right-child (-> n
+                              z/down
+                              z/rightmost)]
+          (-> right-child
+              (z/insert-right c)
+              z/right)))
+
+(defn- append-child
+  "Append a child to the right of the list of childs (or create one if not exists).
+And move to it"
+  [n c] (if (z/children n)
+          (append-to-children-and-move n c)
+          (insert-child-and-move       n c)))
 
 (defn bef
-  "Return the new value for the capture, after 'before' has been called.
-Must start with the value: (z/xml-zip {:tag :capture})"
-  [cap t clazz method args]
-  (let [new-call {:tag (str clazz "." method), :attrs {:args args}}]
-    (if (z/children cap)
-      (append-to-children-and-move cap new-call)
-      (insert-child-and-move       cap new-call))))
+  "Takes a datastructure and the params of a `before` AOP interception,
+and return a new datastructure representing the new capture state.
+The initial value of the capture must be `(z/xml-zip {:tag :capture})`."
+[cap t clazz method args]
+  (append-child cap
+                {:tag (str clazz "." method), :attrs {:args args}}))
 
 (defn aft
-  "Return the new value for the capture, after 'after' has been called"
+  "Same as `bef`, but for the `after` AOP interception."
   [cap t clazz method ret]
-  (z/up (z/edit cap assoc-in [:attrs :ret] ret)))
+  (-> cap
+      (z/edit assoc-in [:attrs :ret] ret)
+      z/up))
 
 (t/deftest itest-after-before
   (t/is (= (z/root
