@@ -19,7 +19,7 @@ sample/Main.class: sample/Main.java sample/a/A.class sample/b/B.class
 run: sample/Main.class
 	java sample.Main
 
-$(CLJ_LIB):
+$(CLJ_LIB): ../project.clj
 	cd .. && lein uberjar
 
 swankject-agent.jar: swankject/SwankjectAspect.java swankject/Callback.java swankject/CallbackImpl.java $(CLJ_LIB)
