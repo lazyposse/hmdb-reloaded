@@ -90,25 +90,32 @@ Usefull for comparing two nested datastructures"
           (println)
           r)))
 
+(defn- insert-child-and-move
+  "Like insert-child, but move to the child"
+  [n c] (-> n
+            (z/insert-child c)
+            (z/down)))
+
+(defn- append-to-children-and-move
+  "Add the child at the right of the list children, and move to it. "
+  [n c] (z/right (z/insert-right (-> n
+                                     z/down
+                                     z/rightmost)
+                                 c)))
+
 (defn bef
   "Return the new value for the capture, after 'before' has been called.
 Must start with the value: (z/xml-zip {:tag :capture})"
   [cap t clazz method args]
-  (let [new-call {:tag (str clazz "." method)
-                  :attrs {:args args}}]
+  (let [new-call {:tag (str clazz "." method), :attrs {:args args}}]
     (if (z/children cap)
-      (z/right (z/insert-right (z/rightmost (z/down cap))
-                               new-call))
-      (z/down  (z/insert-child cap new-call)))))
-
-#_(def bef (loggify bef))
+      (append-to-children-and-move cap new-call)
+      (insert-child-and-move       cap new-call))))
 
 (defn aft
   "Return the new value for the capture, after 'after' has been called"
   [cap t clazz method ret]
   (z/up (z/edit cap assoc-in [:attrs :ret] ret)))
-
-#_(def aft (loggify aft))
 
 (t/deftest itest-after-before
   (t/is (= (z/root
