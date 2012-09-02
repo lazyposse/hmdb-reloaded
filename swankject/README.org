@@ -125,8 +125,29 @@ CLOSED: [2012-08-22 Wed 12:26]
 
 Not relevant anymore
 
-** TODO using the agent
-** TODO transverse stuff [66%]
+** IN-PROGRESS using the agent [0%]
+
+*** IN-PROGRESS code a simple clojure callback that dump the calls in a atom [33%]
+
+**** DONE design
+CLOSED: [2012-08-26 Sun 19:50]
+
+We take the same structure as the one used by clojure.xml to emit xml.
+See =scratch.clj=
+Advantage: we can export call stacks easily in xml.
+
+
+**** IN-PROGRESS coding the capture in an atom [33%]
+
+***** DONE the basic capture of methods call in an atom is working
+CLOSED: [2012-09-02 Sun 13:27]
+
+***** TODO implements the throwing behaviour
+
+***** TODO serialize args/return values along with the method calls
+
+
+** TODO transverse stuff [50%]
 
 *** DONE rework the .gitignore for the subproject swankject
 CLOSED: [2012-08-20 Mon 08:14]
@@ -145,10 +166,11 @@ That's because I ve got the warning by leiningen that clojure projects
 finishing by 'jure' aren't welcome :)
 
 
-
 *** DONE add more tools in the repl (doc, javadoc, ...)
 CLOSED: [2012-08-22 Wed 12:33]
 
+
+*** TODO rename the project (again!) as swank will be replaced by nrepl
 * TODO nice to have [0%]
 ** TODO check the license of aspectJ to know if we can embed it
 
