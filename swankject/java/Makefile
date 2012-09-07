@@ -28,3 +28,10 @@ swankject-agent.jar: swankject/SwankjectAspect.java swankject/Callback.java swan
 run-load-time-weaving: sample/Main.class swankject-agent.jar $(CLJ_LIB)
 	java -javaagent":$(AJC_WE)" \
              -classpath ".:swankject-agent.jar:$(AJC_RT):$(CLJ_LIB)" sample.Main
+
+sample/awt/BufferedShapeMover.class: sample/awt/BufferedShapeMover.java
+	javac sample/awt/BufferedShapeMover.java
+
+run-load-time-weaving-awt: sample/awt/BufferedShapeMover.class swankject-agent.jar $(CLJ_LIB)
+	java -javaagent":$(AJC_WE)" \
+             -classpath ".:swankject-agent.jar:$(AJC_RT):$(CLJ_LIB)" sample.awt.BufferedShapeMover

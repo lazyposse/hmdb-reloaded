@@ -137,11 +137,14 @@ See =scratch.clj=
 Advantage: we can export call stacks easily in xml.
 
 
-**** IN-PROGRESS coding the capture in an atom [33%]
+**** IN-PROGRESS coding the capture in an atom [50%]
 
 ***** DONE the basic capture of methods call in an atom is working
 CLOSED: [2012-09-02 Sun 13:27]
 
+
+***** DONE test the interception and storing in the atom with a more complex program
+CLOSED: [2012-09-07 Fri 09:33]
 ***** TODO implements the throwing behaviour
 
 ***** TODO serialize args/return values along with the method calls

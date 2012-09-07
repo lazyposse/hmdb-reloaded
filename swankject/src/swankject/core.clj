@@ -10,12 +10,13 @@
 ;; * and play with it
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(ns swankject.core
+(ns  swankject.core
   [:use
    [clojure
-    [repl               :only [doc find-doc]]
-    [pprint             :only [pp pprint   ]]]
-   [clojure.tools.trace :only [trace deftrace trace-ns]]]
+    [repl                :only [doc find-doc]]
+    [pprint              :only [pp pprint   ]]]
+   [clojure.tools.trace  :only [trace deftrace trace-ns]]
+   [clojure.java.javadoc :only [javadoc]]]
   [:require
    [clojure
     [data                :as d]
@@ -25,9 +26,11 @@
     [walk                :as w]
     [xml                 :as x]
     [zip                 :as z]]
-   [clojure.java.javadoc :as jd]]
+   [clojure.java.shell   :as sh]
+   [clojure.java.io      :as io]]
   [:import
-   [swankject SwankjectAspect Callback CallbackImpl]
+   [swankject SwankjectAspect Callback CallbackImpl]]
+  #_[:import
    [sample    Main]
    [sample.a  A]
    [sample.b  B]])
@@ -40,13 +43,13 @@
 (SwankjectAspect/setCallback nil)
 
 ;; and runing the prog => no sign of interception should be seen
-(Main/main nil)
+#_(Main/main nil)
 
 ;; now put the callback again
 (SwankjectAspect/setCallback (CallbackImpl.))
 
 ;; and runing the prog => now you should see something
-(Main/main nil)
+#_(Main/main nil)
 
 ;;-----------------------------------------------------------------------------
 ;; Implements a simple callback in clojure
@@ -62,7 +65,7 @@
 (SwankjectAspect/setCallback simple-log-callback)
 
 ;; see it in action
-(Main/main nil)
+#_(Main/main nil)
 
 ;;-----------------------------------------------------------------------------
 ;; Some dev functions
