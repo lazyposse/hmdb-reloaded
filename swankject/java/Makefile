@@ -16,6 +16,9 @@ sample/b/B.class: sample/b/B.java
 sample/Main.class: sample/Main.java sample/a/A.class sample/b/B.class
 	javac sample/Main.java
 
+sample/Graph.class: sample/Graph.java
+	javac sample/Graph.java
+
 run: sample/Main.class
 	java sample.Main
 
@@ -32,6 +35,6 @@ run-load-time-weaving: sample/Main.class swankject-agent.jar $(CLJ_LIB)
 sample/awt/BufferedShapeMover.class: sample/awt/BufferedShapeMover.java
 	javac sample/awt/BufferedShapeMover.java
 
-run-load-time-weaving-awt: sample/awt/BufferedShapeMover.class swankject-agent.jar $(CLJ_LIB)
+run-load-time-weaving-awt: sample/awt/BufferedShapeMover.class sample/Graph.class swankject-agent.jar $(CLJ_LIB)
 	java -javaagent":$(AJC_WE)" \
              -classpath ".:swankject-agent.jar:$(AJC_RT):$(CLJ_LIB)" sample.awt.BufferedShapeMover

@@ -137,7 +137,7 @@ See =scratch.clj=
 Advantage: we can export call stacks easily in xml.
 
 
-**** IN-PROGRESS coding the capture in an atom [50%]
+**** IN-PROGRESS coding the capture in an atom [40%]
 
 ***** DONE the basic capture of methods call in an atom is working
 CLOSED: [2012-09-02 Sun 13:27]
@@ -147,8 +147,25 @@ CLOSED: [2012-09-02 Sun 13:27]
 CLOSED: [2012-09-07 Fri 09:33]
 ***** TODO implements the throwing behaviour
 
-***** TODO serialize args/return values along with the method calls
+***** IN-PROGRESS serialize args/return values along with the method calls [100%]
 
+****** DONE is it possible to merge clojure.xml with XStream xml? => yes! :) [100%]
+CLOSED: [2012-09-08 Sat 13:50]
+
+******* DONE how xstream behaves with circular references?
+CLOSED: [2012-09-08 Sat 13:50]
+
+it behaves well
+
+******* DONE how clojure.xml behaves with XStream's XML ?
+CLOSED: [2012-09-08 Sat 13:49]
+
+it behave badly (adds linebreak)
+
+******* DONE how clojure.data.xml behaves with XStream's XML ?
+CLOSED: [2012-09-08 Sat 13:49]
+
+it behave well (year!)
 
 ** TODO transverse stuff [50%]
 
