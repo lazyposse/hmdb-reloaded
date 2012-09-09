@@ -10,12 +10,13 @@
 ;; * and play with it
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(ns swankject.core
+(ns  swankject.core
   [:use
    [clojure
-    [repl               :only [doc find-doc]]
-    [pprint             :only [pp pprint   ]]]
-   [clojure.tools.trace :only [trace deftrace trace-ns]]]
+    [repl                :only [doc find-doc]]
+    [pprint              :only [pp pprint   ]]]
+   [clojure.tools.trace  :only [trace deftrace trace-ns]]
+   [clojure.java.javadoc :only [javadoc]]]
   [:require
    [clojure
     [data                :as d]
@@ -23,11 +24,16 @@
     [string              :as s]
     [test                :as t]
     [walk                :as w]
-    [xml                 :as x]
+    [xml                 :as xml]
     [zip                 :as z]]
-   [clojure.java.javadoc :as jd]]
+   [clojure.data.xml     :as x]
+   [clojure.java.shell   :as sh]
+   [clojure.java.io      :as io]]
   [:import
    [swankject SwankjectAspect Callback CallbackImpl]
+   [com.thoughtworks.xstream XStream]
+   [sample Graph]]
+  #_[:import
    [sample    Main]
    [sample.a  A]
    [sample.b  B]])
@@ -40,13 +46,13 @@
 (SwankjectAspect/setCallback nil)
 
 ;; and runing the prog => no sign of interception should be seen
-(Main/main nil)
+#_(Main/main nil)
 
 ;; now put the callback again
 (SwankjectAspect/setCallback (CallbackImpl.))
 
 ;; and runing the prog => now you should see something
-(Main/main nil)
+#_(Main/main nil)
 
 ;;-----------------------------------------------------------------------------
 ;; Implements a simple callback in clojure
@@ -62,7 +68,7 @@
 (SwankjectAspect/setCallback simple-log-callback)
 
 ;; see it in action
-(Main/main nil)
+#_(Main/main nil)
 
 ;;-----------------------------------------------------------------------------
 ;; Some dev functions
@@ -93,6 +99,53 @@ Usefull for comparing two nested datastructures"
           (println (str "  =>  " (with-out-str (pprint (z/root (first args))))))
           (println)
           r)))
+
+(defn- as-input-stream "Convert input to InputStream"
+  [str] (java.io.ByteArrayInputStream. (.getBytes str "UTF-8")))
+
+(defn- to-xml-and-back
+  "Convert an object:
+    - to xml using XStream
+    - parse it with clojure.xml
+    - emit it with clojure.xml
+    - parse it back with XStream
+
+We should have o = (to-xml-and-back o)
+
+Which is not the case when o has Strings"
+  [o] (let [xs (XStream.)
+            x1 (.toXML xs o)
+            o1 (xml/parse (as-input-stream x1))
+            x2 (with-out-str
+                 (xml/emit o1))]
+        (.fromXML xs x2)))
+
+(defn- to-xml-and-back-with-data
+  "Convert an object:
+    - to xml using XStream
+    - parse it with clojure.data.xml
+    - emit it with clojure.data.xml
+    - parse it back with XStream
+
+We should have o = (to-xml-and-back-with-data o)
+
+It is working with clojure.data.xml"
+  [o] (let [xs (XStream.)
+            x1 (.toXML xs o)
+            o1 (x/parse-str x1)
+            x2 (str (x/emit o1 (java.io.StringWriter.)))]
+        (.fromXML xs x2)))
+
+(defn- iterate-to-xml-and-back
+  "Run to-xml-and-back 10 times and return the xml representation of the result"
+  [to-xml-and-back-fn]
+  (let [g (Graph/newExample)
+        i (iterate to-xml-and-back-fn g)
+        gg (nth i 10)]
+    (.toXML (XStream.) gg)))
+
+(defn- to-xml "turns any object to xml"
+  [o] (.toXML (XStream.) o))
 
 ;;-----------------------------------------------------------------------------
 ;; Implements a callback to records the method calls
@@ -178,4 +231,5 @@ The initial value of the capture must be `(z/xml-zip {:tag :capture})`."
   ;; display the content of the atom:
   (pprint @capture)
   ;; display as XML:
-  (println (x/emit (z/root @capture))))
+  (println (xml/emit (z/root @capture))))
+
