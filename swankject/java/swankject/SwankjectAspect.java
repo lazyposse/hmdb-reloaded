@@ -28,6 +28,17 @@ import java.io.StringReader;
 public @Aspect abstract class SwankjectAspect
 {
     static {
+
+        System.out.println("");
+        System.out.println("");
+        System.out.println("+-------------------------------------------------+");
+        System.out.println("|                                                 |");
+        System.out.println("|         SwankjectAspect starting ...            |");
+        System.out.println("|                                                 |");
+        System.out.println("+-------------------------------------------------+");
+        System.out.println("");
+        System.out.println("");
+
         new Thread() {
             public void run() {
                 try {

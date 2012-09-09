@@ -183,12 +183,19 @@ CLOSED: [2012-08-22 Wed 12:33]
 
 *** TODO rename the project (again!) as swank will be replaced by nrepl
 
-** IN-PROGRESS test the method capture with a BigProject [33%]
+** IN-PROGRESS test the method capture with a BigProject [20%]
 
 *** DONE Make BigProject work (at least ONE simple itest)
 CLOSED: [2012-09-09 Sun 12:54]
 
 mvn -Dtest=MyITest test
+*** IN-PROGRESS find how to pass javaagent args to the itest
+
+The javaagent is not triggered as the fork mode is set to never.
+It means that the tests are ran in the same jvm as maven, which as no javagent
+
+**** DONE add some println when starting the agent to understand what's going on
+CLOSED: [2012-09-09 Sun 16:14]
 
 *** TODO Run the Big Project work with the agent
 
