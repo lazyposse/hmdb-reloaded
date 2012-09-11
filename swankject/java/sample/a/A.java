@@ -2,14 +2,12 @@ package sample.a;
 
 public class A {
 
-    public static void main(String[]argv) {
-        countFast(100);
-        countSlow(100);
-        throwException();
+    public static void willThrow(String msg) {
+        willThrowSub(msg);
     }
 
-    private static void throwException() {
-        throw new RuntimeException("hi there");
+    private static void willThrowSub(String msg) {
+        throw new RuntimeException("msg");
     }
 
     public static void countSlow(int value) {

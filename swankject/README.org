@@ -1,6 +1,7 @@
 
-* IN-PROGRESS stuff to do [25%]
-** IN-PROGRESS coding the agent [100%]
+* IN-PROGRESS stuff to do [50%]
+** DONE coding the agent [100%]
+CLOSED: [2012-09-11 Tue 14:09]
 *** DONE agent code [100%]
 CLOSED: [2012-08-22 Wed 13:37]
 **** DONE interface of the callback [100%]
@@ -123,7 +124,6 @@ CLOSED: [2012-08-22 Wed 12:26]
 
 Not relevant anymore
 
-
 *** DONE agent must wait for clojure signal to continue
 CLOSED: [2012-09-11 Tue 13:15]
 
@@ -132,7 +132,7 @@ the app to start
 
 
 
-** TODO implement a callback that capture all the method calls [50%]
+** IN-PROGRESS implement a callback that capture all the method calls [75%]
 
 *** DONE the basic capture of methods call in an atom is working
 CLOSED: [2012-09-02 Sun 13:27]
@@ -141,7 +141,8 @@ CLOSED: [2012-09-02 Sun 13:27]
 *** DONE test the interception and storing in the atom with a more complex program
 CLOSED: [2012-09-07 Fri 09:33]
 
-*** TODO implements the throwing behaviour
+*** DONE implements the throwing behaviour
+CLOSED: [2012-09-11 Tue 14:31]
 
 *** TODO serialize args/return values along with the method calls [50%]
 

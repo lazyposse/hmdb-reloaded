@@ -32,7 +32,7 @@
   [:import
    [swankject SwankjectAspect Callback CallbackImpl]
    [com.thoughtworks.xstream XStream]
-   [sample Graph]]
+   #_[sample Graph]]
   #_[:import
    [sample    Main]
    [sample.a  A]
@@ -136,13 +136,13 @@ It is working with clojure.data.xml"
             x2 (str (x/emit o1 (java.io.StringWriter.)))]
         (.fromXML xs x2)))
 
-(defn- iterate-to-xml-and-back
-  "Run to-xml-and-back 10 times and return the xml representation of the result"
-  [to-xml-and-back-fn]
-  (let [g (Graph/newExample)
-        i (iterate to-xml-and-back-fn g)
-        gg (nth i 10)]
-    (.toXML (XStream.) gg)))
+(comment (defn- iterate-to-xml-and-back
+   "Run to-xml-and-back 10 times and return the xml representation of the result"
+   [to-xml-and-back-fn]
+   (let [g (Graph/newExample)
+         i (iterate to-xml-and-back-fn g)
+         gg (nth i 10)]
+     (.toXML (XStream.) gg))))
 
 (defn- to-xml "turns any object to xml"
   [o] (.toXML (XStream.) o))
@@ -188,6 +188,13 @@ The initial value of the capture must be `(z/xml-zip {:tag :capture})`."
       (z/edit assoc-in [:attrs :ret] ret)
       z/up))
 
+(defn thr
+  "Same as `aft`, but for the `afterThrowing` aspectJ pointcut."
+  [cap t clazz method throwable]
+  (-> cap
+      (z/edit assoc-in [:attrs :throw] throwable)
+      z/up))
+
 (t/deftest itest-after-before
   (t/is (= (z/root
             (reduce (fn [r [fun meth arg]] (fun r nil "" meth arg))
@@ -197,6 +204,14 @@ The initial value of the capture must be `(z/xml-zip {:tag :capture})`."
                      [bef     "s" "s->" ]
                      [aft     "s" "<-s" ]
                      [aft   "a" "<-a"   ]
+
+                     ;; with an exception throwed by s, then a, then
+                     ;; catched by m
+                     [bef   "a" "a2->"   ]
+                     [bef     "s" "s2->" ]
+                     [thr     "s" "!s"]
+                     [thr   "a" "!a"   ]
+
                      [bef   "b" "b->"   ]
                      [aft   "b" "<-b"   ]
                      [aft "m" "<-m"     ]]))
@@ -210,6 +225,12 @@ The initial value of the capture must be `(z/xml-zip {:tag :capture})`."
                                   :content [{:tag ".s"
                                              :attrs {:args "s->"
                                                      :ret  "<-s"}}]}
+                                 {:tag     ".a"
+                                  :attrs   {:args "a2->"
+                                            :throw  "!a"}
+                                  :content [{:tag ".s"
+                                             :attrs {:args "s2->"
+                                                     :throw "!s"}}]}
                                  {:tag     ".b"
                                   :attrs   {:args "b->"
                                             :ret  "<-b"}}]}]})))
@@ -220,7 +241,7 @@ The initial value of the capture must be `(z/xml-zip {:tag :capture})`."
   (proxy [Callback] []
     (before         [t clazz method args     ] (swap! capture bef t clazz method args) )
     (afterReturning [t clazz method ret      ] (swap! capture aft t clazz method ret))
-    (afterThrowing  [t clazz method throwable] (println (str "<=afterThrowing  (not implemented)" clazz "." method)))))
+    (afterThrowing  [t clazz method throwable] (swap! capture thr t clazz method throwable))))
 
 ;; set it
 (SwankjectAspect/setCallback capture-callback)
