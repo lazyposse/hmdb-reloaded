@@ -1,5 +1,5 @@
 
-* IN-PROGRESS stuff to do [25%]
+* IN-PROGRESS stuff to do [50%]
 ** DONE coding the agent [100%]
 CLOSED: [2012-08-22 Wed 13:42]
 *** DONE agent code [100%]
@@ -183,19 +183,46 @@ CLOSED: [2012-08-22 Wed 12:33]
 
 *** TODO rename the project (again!) as swank will be replaced by nrepl
 
-** IN-PROGRESS test the method capture with a BigProject [20%]
+** DONE test the method capture with a BigProject [50%]
+CLOSED: [2012-09-11 Tue 12:28]
 
 *** DONE Make BigProject work (at least ONE simple itest)
 CLOSED: [2012-09-09 Sun 12:54]
 
 mvn -Dtest=MyITest test
-*** IN-PROGRESS find how to pass javaagent args to the itest
+*** DONE find how to pass javaagent args to the itest
+CLOSED: [2012-09-11 Tue 11:40]
 
 The javaagent is not triggered as the fork mode is set to never.
 It means that the tests are ran in the same jvm as maven, which as no javagent
 
+It's working but without maven
+
 **** DONE add some println when starting the agent to understand what's going on
 CLOSED: [2012-09-09 Sun 16:14]
+
+**** FAIL can I use surefire and the agent? => no
+CLOSED: [2012-09-09 Sun 16:51]
+
+it's hell: in forking mode, surefire generate a jar, and then launch the
+tests with java -jar, meaning -cp (and -javaagent?) are ignored
+completly
+
+**** FAIL try to run in "no fork mode", by using MAVEN_OPTS [100%]
+CLOSED: [2012-09-09 Sun 19:41]
+
+***** DONE first try to run the test in fork mode (no agent)
+CLOSED: [2012-09-09 Sun 17:00]
+
+it works!
+so at least for this test, the build is not affected by fork=never!
+
+***** FAIL try with the agent now
+CLOSED: [2012-09-09 Sun 19:41]
+
+
+**** DONE run the test for a BigProject with swanject, and without maven [%]
+CLOSED: [2012-09-11 Tue 11:40]
 
 *** TODO Run the Big Project work with the agent
 
