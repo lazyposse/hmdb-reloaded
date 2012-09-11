@@ -27,18 +27,9 @@ import java.io.StringReader;
 
 public @Aspect abstract class SwankjectAspect
 {
+    private static Object monitor = new Object();
+
     static {
-
-        System.out.println("");
-        System.out.println("");
-        System.out.println("+-------------------------------------------------+");
-        System.out.println("|                                                 |");
-        System.out.println("|         SwankjectAspect starting ...            |");
-        System.out.println("|                                                 |");
-        System.out.println("+-------------------------------------------------+");
-        System.out.println("");
-        System.out.println("");
-
         new Thread() {
             public void run() {
                 try {
@@ -60,6 +51,45 @@ public @Aspect abstract class SwankjectAspect
 
     public static void setCallback(Callback callback) {
         cb = callback;
+    }
+
+    /**
+     * Should be called from the REPL, will allow the agent to continue
+     * loading, and the spied app to continue.
+     */
+    public static void start() {
+        // I feel that it is bad :)
+        synchronized (monitor) {
+            monitor.notify();
+        }
+    }
+
+    public SwankjectAspect() {
+        System.out.println("");
+        System.out.println("");
+        System.out.println("++----------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                                         |");
+        System.out.println("|                       SwankjectAspect waiting to start ...                              |");
+        System.out.println("|                       ====================================                              |");
+        System.out.println("|                                                                                         |");
+        System.out.println("|                                                                                         |");
+        System.out.println("| To start it from the REPL:                                                              |");
+        System.out.println("|                                                                                         |");
+        System.out.println("|     - In Emacs        : M-x slime-connect                                               |");
+        System.out.println("|                                                                                         |");
+        System.out.println("|     - Then in the REPL: (swankject.SwankjectAspect/start)                               |");
+        System.out.println("|                                                                                         |");
+        System.out.println("+-----------------------------------------------------------------------------------------+");
+        System.out.println("");
+        System.out.println("");
+        // I feel that it is bad :)
+        synchronized (monitor) {
+            try {
+                monitor.wait();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Before ( value = "logging()", argNames = "joinPoint" )
