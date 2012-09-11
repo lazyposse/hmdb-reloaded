@@ -8,6 +8,16 @@
 #
 ###############################################################################
 
+ME=$(basename $0)
+
+echo
+echo
+echo "+-----------------------------------------------------------------------------+"
+echo "| $ME: Running ..."
+echo "+-----------------------------------------------------------------------------+"
+echo
+echo
+
 CONF=~/.swankject.conf
 
 if [ -f "$CONF" ] ;
@@ -61,8 +71,30 @@ echo
 
 cd "$MVN_MODULE_DIR"
 
+echo
+echo
+echo "    +-------------------------------------------------------------------------+"
+echo "    | $ME: Running Maven copy-dependencies ..."
+echo "    +-------------------------------------------------------------------------+"
+echo
+echo
 mvn dependency:copy-dependencies
+echo
+echo
+echo "    +-------------------------------------------------------------------------+"
+echo "    | $ME: Running Maven copy-dependencies DONE"
+echo "    +-------------------------------------------------------------------------+"
+echo
+echo
+echo
 
+echo
+echo
+echo "    +-------------------------------------------------------------------------+"
+echo "    | $ME: Building classpath ..."
+echo "    +-------------------------------------------------------------------------+"
+echo
+echo
 CP=''
 for I in $(ls target/dependency/*.jar | grep -v 'aspectj')
 do
@@ -75,9 +107,39 @@ done
 
 CP="$CP:$SWANKJECT_HOME/java"
 CP="$CP:$SWANKJECT_HOME/java/swankject-agent.jar"
-CP="$CP:$SWANKJECT_HOME/java/target/swankject-0.1.0-SNAPSHOT-standalone.jar"
+CP="$CP:$SWANKJECT_HOME/target/swankject-0.1.0-SNAPSHOT-standalone.jar"
 CP="$CP:$ASPECTJ_HOME/lib/aspectjrt.jar"
 CP="$CP:target/test-classes"
+echo
+echo
+echo "    +-------------------------------------------------------------------------+"
+echo "    | $ME: Building classpath DONE"
+echo "    +-------------------------------------------------------------------------+"
+echo
+echo
 
-java -javaagent:"$ASPECTJ_HOME/lib/aspectjweaver.jar" -cp "$CP" org.junit.runner.JUnitCore "$TEST_TO_RUN"
+echo
+echo
+echo "    +-------------------------------------------------------------------------+"
+echo "    | $ME: Running test with javaagent ..."
+echo "    +-------------------------------------------------------------------------+"
+echo
+echo
+set -x
+java -javaagent:"$ASPECTJ_HOME/lib/aspectjweaver.jar" -classpath "$CP" org.junit.runner.JUnitCore "$TEST_TO_RUN"
+set +x
+echo
+echo
+echo "    +-------------------------------------------------------------------------+"
+echo "    | $ME: Running test with javaagent DONE"
+echo "    +-------------------------------------------------------------------------+"
+echo
+echo
 
+echo
+echo
+echo "+-----------------------------------------------------------------------------+"
+echo "| $ME: DONE"
+echo "+-----------------------------------------------------------------------------+"
+echo
+echo

@@ -173,13 +173,19 @@ And move to it"
           (append-to-children-and-move n c)
           (insert-child-and-move       n c)))
 
+(defn- method-to-tag
+  "Take a couple class / method and return a string suitable for an XML tag"
+  [clazz method] (let [clazz-str  (if clazz  (str clazz)  "_unknown-class_")
+                       method-str (if method (str method) "_unknown-method_")]
+                   (str clazz-str \. method-str)))
+
 (defn bef
   "Takes a datastructure and the params of a `before` AOP interception,
 and return a new datastructure representing the new capture state.
 The initial value of the capture must be `(z/xml-zip {:tag :capture})`."
 [cap t clazz method args]
   (append-child cap
-                {:tag (str clazz "." method), :attrs {:args args}}))
+                {:tag (method-to-tag clazz method), :attrs {:args args}}))
 
 (defn aft
   "Same as `bef`, but for the `after` AOP interception."
@@ -252,5 +258,10 @@ The initial value of the capture must be `(z/xml-zip {:tag :capture})`."
   ;; display the content of the atom:
   (pprint @capture)
   ;; display as XML:
-  (println (xml/emit (z/root @capture))))
+  (println (xml/emit (z/root @capture)))
+
+  (swankject.SwankjectAspect/start)
+
+
+  )
 

@@ -30,6 +30,16 @@ public @Aspect abstract class SwankjectAspect
     private static Object monitor = new Object();
 
     static {
+        System.out.println("");
+        System.out.println("");
+        System.out.println("+-----------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                                         |");
+        System.out.println("|                          SwankjectAspect is loading ...                                 |");
+        System.out.println("|                          ==============================                                 |");
+        System.out.println("|                                                                                         |");
+        System.out.println("+-----------------------------------------------------------------------------------------+");
+        System.out.println("");
+        System.out.println("");
         new Thread() {
             public void run() {
                 try {
@@ -67,7 +77,7 @@ public @Aspect abstract class SwankjectAspect
     public SwankjectAspect() {
         System.out.println("");
         System.out.println("");
-        System.out.println("++----------------------------------------------------------------------------------------+");
+        System.out.println("+-----------------------------------------------------------------------------------------+");
         System.out.println("|                                                                                         |");
         System.out.println("|                       SwankjectAspect waiting to start ...                              |");
         System.out.println("|                       ====================================                              |");

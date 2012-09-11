@@ -132,7 +132,7 @@ the app to start
 
 
 
-** IN-PROGRESS implement a callback that capture all the method calls [75%]
+** IN-PROGRESS implement a callback that capture all the method calls [50%]
 
 *** DONE the basic capture of methods call in an atom is working
 CLOSED: [2012-09-02 Sun 13:27]
@@ -143,7 +143,6 @@ CLOSED: [2012-09-07 Fri 09:33]
 
 *** DONE implements the throwing behaviour
 CLOSED: [2012-09-11 Tue 14:31]
-
 *** TODO serialize args/return values along with the method calls [50%]
 
 **** DONE is it possible to merge clojure.xml with XStream xml? => yes! :) [75%]
@@ -165,6 +164,26 @@ CLOSED: [2012-09-08 Sat 13:49]
 it behave well (year!)
 
 **** TODO need to serialize args and return values
+
+*** IN-PROGRESS capture meth calls with a BigProject [33%]
+
+**** DONE add more logs to understand why it's not working
+CLOSED: [2012-09-11 Tue 17:12]
+
+Well it is working :)
+
+It's just that the javaagent is not even loaded if there's no pointcuts
+to match.
+For example: the aop.xml come with the pointcut sample..*.
+If you try to run it on your project com.mycompany it won't do anything
+You have to change the aop.xml to com.mycompany..*
+
+
+**** TODO escape XML propertly (tags and attributes) [0%]
+
+***** TODO Test clojure.xml for escaping
+
+***** TODO Test clojure.data.xml for escaping
 
 ** TODO transverse stuff [50%]
 
@@ -247,6 +266,7 @@ we can read but not modify
 it would be nice to be able to modify the args of a method, the return
 value, the execption, ...
 
+** TODO wait for the swank server to start (with a nice msg)
 
 * TODO ideas [%]
 
