@@ -103,38 +103,49 @@ Usefull for comparing two nested datastructures"
 (defn- as-input-stream "Convert input to InputStream"
   [str] (java.io.ByteArrayInputStream. (.getBytes str "UTF-8")))
 
+(defmulti to-xml "elements to XML using different implems"
+  :serializer)
+
+(defmulti parse-xml "XML to elements using different implems"
+  :serializer)
+
+(defmethod parse-xml :clojure.xml
+  [{xml :xml}] (xml/parse (as-input-stream xml)))
+
+(defmethod parse-xml :clojure.data.xml
+  [{xml :xml}] (x/parse-str xml))
+
+(defmethod to-xml :clojure.xml
+  [{elements :elements}] (with-out-str (xml/emit elements)))
+
+(defmethod to-xml :clojure.data.xml
+  [{elements :elements}] (x/emit-str elements))
+
 (defn- to-xml-and-back
   "Convert an object:
     - to xml using XStream
-    - parse it with clojure.xml
-    - emit it with clojure.xml
+    - parse it with the :serializer (:clojure.xml or :clojure.data.xml) passed in the opts
+    - emit it with the serializer
     - parse it back with XStream
 
 We should have o = (to-xml-and-back o)
 
 Which is not the case when o has Strings"
-  [o] (let [xs (XStream.)
-            x1 (.toXML xs o)
-            o1 (xml/parse (as-input-stream x1))
-            x2 (with-out-str
-                 (xml/emit o1))]
-        (.fromXML xs x2)))
+  [o & opts] (let [xs (XStream.)
+                   x1 (.toXML xs o)
+                   o1 (parse-xml (merge {:xml      x1} opts))
+                   x2 (to-xml    (merge {:elements o1} opts))]
+               (.fromXML xs x2)))
 
-(defn- to-xml-and-back-with-data
-  "Convert an object:
-    - to xml using XStream
-    - parse it with clojure.data.xml
-    - emit it with clojure.data.xml
-    - parse it back with XStream
+(defn- to-xml-and-back-clojure.xml
+  "We should have o = (to-xml-and-back o)
+Which is not the case when o has Strings"
+  [o] (to-xml-and-back o :serializer :clojure.xml))
 
-We should have o = (to-xml-and-back-with-data o)
-
-It is working with clojure.data.xml"
-  [o] (let [xs (XStream.)
-            x1 (.toXML xs o)
-            o1 (x/parse-str x1)
-            x2 (str (x/emit o1 (java.io.StringWriter.)))]
-        (.fromXML xs x2)))
+(defn- to-xml-and-back-clojure.data.xml
+  "We should have o = (to-xml-and-back o)
+Which is not the case even if o has Strings"
+  [o] (to-xml-and-back o :serializer :clojure.data.xml))
 
 (comment (defn- iterate-to-xml-and-back
    "Run to-xml-and-back 10 times and return the xml representation of the result"
@@ -143,9 +154,6 @@ It is working with clojure.data.xml"
          i (iterate to-xml-and-back-fn g)
          gg (nth i 10)]
      (.toXML (XStream.) gg))))
-
-(defn- to-xml "turns any object to xml"
-  [o] (.toXML (XStream.) o))
 
 ;;-----------------------------------------------------------------------------
 ;; Implements a callback to records the method calls
@@ -177,15 +185,16 @@ And move to it"
   "Take a couple class / method and return a string suitable for an XML tag"
   [clazz method] (let [clazz-str  (if clazz  (str clazz)  "_unknown-class_")
                        method-str (if method (str method) "_unknown-method_")]
-                   (str clazz-str \. method-str)))
+                   (keyword (str clazz-str \. method-str))))
 
 (defn bef
   "Takes a datastructure and the params of a `before` AOP interception,
 and return a new datastructure representing the new capture state.
 The initial value of the capture must be `(z/xml-zip {:tag :capture})`."
 [cap t clazz method args]
-  (append-child cap
-                {:tag (method-to-tag clazz method), :attrs {:args args}}))
+(append-child cap
+              (x/element (method-to-tag clazz method)
+                         {:args args}) ))
 
 (defn aft
   "Same as `bef`, but for the `after` AOP interception."
@@ -204,7 +213,7 @@ The initial value of the capture must be `(z/xml-zip {:tag :capture})`."
 (t/deftest itest-after-before
   (t/is (= (z/root
             (reduce (fn [r [fun meth arg]] (fun r nil "" meth arg))
-                    (z/xml-zip {:tag :capture})
+                    (z/xml-zip (x/element :capture))
                     [[bef "m" "m->"     ]
                      [bef   "a" "a->"   ]
                      [bef     "s" "s->" ]
@@ -241,7 +250,12 @@ The initial value of the capture must be `(z/xml-zip {:tag :capture})`."
                                   :attrs   {:args "b->"
                                             :ret  "<-b"}}]}]})))
 
-(def capture (atom (z/xml-zip {:tag :capture})))
+(def e (z/root
+        (reduce (fn [r [fun meth arg]] (fun r nil "" meth arg))
+                (z/xml-zip (x/element :capture))
+                [[bef "m" "m->"     ]])))
+
+(def capture (atom (z/xml-zip (x/element :capture))))
 
 (def capture-callback
   (proxy [Callback] []
@@ -251,6 +265,41 @@ The initial value of the capture must be `(z/xml-zip {:tag :capture})`."
 
 ;; set it
 (SwankjectAspect/setCallback capture-callback)
+
+;;-----------------------------------------------------------------------------
+;; worker functions to periodiaclly write the content of the atom to disk
+;;-----------------------------------------------------------------------------
+
+(defn write-clj-to-disk!
+  "Write the content of capture to disk, in clj format"
+  [] (spit "/home/wenis/t.clj"
+           (with-out-str (pprint @capture))))
+
+(defn write-xml-to-disk!
+  "Write the content of capture to disk, in xml format"
+  [] (x/indent (z/root @capture)
+               (io/writer "/home/wenis/t.xml")))
+
+(defn exec "Takes one or more message/function, and return a fn that will print the message and exec the fn with timings"
+  [& msg-fn]
+  (fn []
+    (doseq [[m f] (partition 2 msg-fn)]
+      (println m)
+      (time (f)))))
+
+(defn worker
+  "Takes a fn and a delay and indefinitly run the fn then wait the given delay"
+  [f delay-ms]
+  (while true
+    (f)
+    (Thread/sleep delay-ms)))
+
+(defn write-to-disk-forever!
+  "Return a future that execute forever the write clj and xml to disk"
+  []
+  (future (worker (exec "  Writing clj to disk ..." write-clj-to-disk!
+                        "  Writing xml to disk ..." write-xml-to-disk!)
+                  1000)))
 
 (comment
   ;; run it
@@ -262,6 +311,13 @@ The initial value of the capture must be `(z/xml-zip {:tag :capture})`."
 
   (swankject.SwankjectAspect/start)
 
+  (def f (write-xml-to-disk-forever!))
 
-  )
+  ;; write atom to file (fast, ugly (all on one line))
+  (x/emit (z/root @capture)
+          (io/writer "/home/wenis/t.xml"))
+
+  ;; write atom to file (slow, pretty)
+  (x/indent (z/root @capture)
+            (io/writer "/home/wenis/t.xml")))
 

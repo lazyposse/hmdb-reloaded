@@ -179,11 +179,15 @@ If you try to run it on your project com.mycompany it won't do anything
 You have to change the aop.xml to com.mycompany..*
 
 
-**** TODO escape XML propertly (tags and attributes) [0%]
+**** TODO escape XML propertly (tags and attributes) [66%]
 
-***** TODO Test clojure.xml for escaping
+***** DONE Test clojure.xml for escaping
+CLOSED: [2012-09-14 Fri 12:16]
 
-***** TODO Test clojure.data.xml for escaping
+***** DONE Test clojure.data.xml for escaping
+CLOSED: [2012-09-14 Fri 12:16]
+
+***** IN-PROGRESS solve to xml serialization problem
 
 ** TODO transverse stuff [50%]
 
