@@ -189,7 +189,7 @@ CLOSED: [2012-09-14 Fri 12:16]
 
 ***** IN-PROGRESS solve to xml serialization problem
 
-** TODO transverse stuff [50%]
+** IN-PROGRESS transverse stuff [60%]
 
 *** DONE rework the .gitignore for the subproject swankject
 CLOSED: [2012-08-20 Mon 08:14]
@@ -213,6 +213,14 @@ CLOSED: [2012-08-22 Wed 12:33]
 
 
 *** TODO rename the project (again!) as swank will be replaced by nrepl
+
+
+*** DONE separate the capture logic code from the agent interaction code
+CLOSED: [2012-09-14 Fri 19:12]
+
+This is because depending on the context (embedded in the spied app or
+standalone), we want to load different classes which may or may not be
+available at this time.
 
 ** DONE test the method capture with a BigProject [50%]
 CLOSED: [2012-09-11 Tue 12:28]
