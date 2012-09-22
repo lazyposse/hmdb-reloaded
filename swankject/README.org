@@ -1,7 +1,7 @@
 
-* IN-PROGRESS stuff to do [25%]
+* IN-PROGRESS stuff to do [50%]
 ** DONE coding the agent [100%]
-CLOSED: [2012-08-22 Wed 13:42]
+CLOSED: [2012-09-11 Tue 14:09]
 *** DONE agent code [100%]
 CLOSED: [2012-08-22 Wed 13:37]
 **** DONE interface of the callback [100%]
@@ -114,7 +114,6 @@ CLOSED: [2012-08-22 Wed 08:29]
 **** DONE implements the callback in clojure
 CLOSED: [2012-08-22 Wed 11:53]
 
-
 *** CANCELLED solve the "aop will intercept anything" problem [%]
 CLOSED: [2012-08-22 Wed 13:41]
 
@@ -125,7 +124,15 @@ CLOSED: [2012-08-22 Wed 12:26]
 
 Not relevant anymore
 
-** TODO implement a callback that capture all the method calls [50%]
+*** DONE agent must wait for clojure signal to continue
+CLOSED: [2012-09-11 Tue 13:15]
+
+This will allow the user to have time to do the necessary setup before
+the app to start
+
+
+
+** IN-PROGRESS implement a callback that capture all the method calls [50%]
 
 *** DONE the basic capture of methods call in an atom is working
 CLOSED: [2012-09-02 Sun 13:27]
@@ -134,8 +141,8 @@ CLOSED: [2012-09-02 Sun 13:27]
 *** DONE test the interception and storing in the atom with a more complex program
 CLOSED: [2012-09-07 Fri 09:33]
 
-*** TODO implements the throwing behaviour
-
+*** DONE implements the throwing behaviour
+CLOSED: [2012-09-11 Tue 14:31]
 *** TODO serialize args/return values along with the method calls [50%]
 
 **** DONE is it possible to merge clojure.xml with XStream xml? => yes! :) [75%]
@@ -158,7 +165,31 @@ it behave well (year!)
 
 **** TODO need to serialize args and return values
 
-** TODO transverse stuff [50%]
+*** IN-PROGRESS capture meth calls with a BigProject [33%]
+
+**** DONE add more logs to understand why it's not working
+CLOSED: [2012-09-11 Tue 17:12]
+
+Well it is working :)
+
+It's just that the javaagent is not even loaded if there's no pointcuts
+to match.
+For example: the aop.xml come with the pointcut sample..*.
+If you try to run it on your project com.mycompany it won't do anything
+You have to change the aop.xml to com.mycompany..*
+
+
+**** TODO escape XML propertly (tags and attributes) [66%]
+
+***** DONE Test clojure.xml for escaping
+CLOSED: [2012-09-14 Fri 12:16]
+
+***** DONE Test clojure.data.xml for escaping
+CLOSED: [2012-09-14 Fri 12:16]
+
+***** IN-PROGRESS solve to xml serialization problem
+
+** IN-PROGRESS transverse stuff [60%]
 
 *** DONE rework the .gitignore for the subproject swankject
 CLOSED: [2012-08-20 Mon 08:14]
@@ -183,19 +214,54 @@ CLOSED: [2012-08-22 Wed 12:33]
 
 *** TODO rename the project (again!) as swank will be replaced by nrepl
 
-** IN-PROGRESS test the method capture with a BigProject [20%]
+
+*** DONE separate the capture logic code from the agent interaction code
+CLOSED: [2012-09-14 Fri 19:12]
+
+This is because depending on the context (embedded in the spied app or
+standalone), we want to load different classes which may or may not be
+available at this time.
+
+** DONE test the method capture with a BigProject [50%]
+CLOSED: [2012-09-11 Tue 12:28]
 
 *** DONE Make BigProject work (at least ONE simple itest)
 CLOSED: [2012-09-09 Sun 12:54]
 
 mvn -Dtest=MyITest test
-*** IN-PROGRESS find how to pass javaagent args to the itest
+*** DONE find how to pass javaagent args to the itest
+CLOSED: [2012-09-11 Tue 11:40]
 
 The javaagent is not triggered as the fork mode is set to never.
 It means that the tests are ran in the same jvm as maven, which as no javagent
 
+It's working but without maven
+
 **** DONE add some println when starting the agent to understand what's going on
 CLOSED: [2012-09-09 Sun 16:14]
+
+**** FAIL can I use surefire and the agent? => no
+CLOSED: [2012-09-09 Sun 16:51]
+
+it's hell: in forking mode, surefire generate a jar, and then launch the
+tests with java -jar, meaning -cp (and -javaagent?) are ignored
+completly
+
+**** FAIL try to run in "no fork mode", by using MAVEN_OPTS [100%]
+CLOSED: [2012-09-09 Sun 19:41]
+
+***** DONE first try to run the test in fork mode (no agent)
+CLOSED: [2012-09-09 Sun 17:00]
+
+it works!
+so at least for this test, the build is not affected by fork=never!
+
+***** FAIL try with the agent now
+CLOSED: [2012-09-09 Sun 19:41]
+
+
+**** DONE run the test for a BigProject with swanject, and without maven [%]
+CLOSED: [2012-09-11 Tue 11:40]
 
 *** TODO Run the Big Project work with the agent
 
@@ -212,6 +278,7 @@ we can read but not modify
 it would be nice to be able to modify the args of a method, the return
 value, the execption, ...
 
+** TODO wait for the swank server to start (with a nice msg)
 
 * TODO ideas [%]
 
